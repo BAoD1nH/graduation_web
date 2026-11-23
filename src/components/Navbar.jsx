@@ -42,16 +42,7 @@ export default function Navbar({ onOpenTerminal, selectedOption }) {
             className="px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-blue-50/80 transition-all flex items-center gap-1.5"
           >
             <BookOpen className="w-4 h-4 text-amber-500" />
-            1. Tiểu sử & Lời mời
-          </a>
-
-          <a
-            href="#part2"
-            onClick={() => sound.playTap()}
-            className="px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-blue-50/80 transition-all flex items-center gap-1.5"
-          >
-            <MapPin className="w-4 h-4 text-emerald-500" />
-            2. Bản đồ gửi xe <span className="text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded font-mono font-bold">CROSSY</span>
+            1. Thư mời & Kỷ niệm
           </a>
 
           <a
@@ -60,7 +51,7 @@ export default function Navbar({ onOpenTerminal, selectedOption }) {
             className="px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-blue-50/80 transition-all flex items-center gap-1.5"
           >
             <MessageSquareHeart className="w-4 h-4 text-rose-500" />
-            3. Nhắn nhủ & Thư mời
+            2. Nhắn nhủ & Lưu bút
             <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
           </a>
         </nav>
