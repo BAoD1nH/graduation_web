@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, MapPin, Sparkles, CheckCircle2, ChevronRight, Share2, Award, Heart, Laptop, Camera, Smile } from 'lucide-react';
+import MemoryAlbum from './MemoryAlbum';
 import { sound } from '../utils/audio';
 import { launchConfetti } from '../utils/confetti';
 
@@ -39,49 +40,6 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
     setSelectedOption(opt);
     launchConfetti();
   };
-
-  const yearsData = [
-    {
-      year: "Năm 1",
-      title: "Hello World & Những lần lạc lối",
-      period: "2022 - 2023",
-      tag: "C/C++ • Wecode • Dãy B-C",
-      desc: "Chập chững làm quen với con trỏ, mảng, hệ thống chấm bài Wecode thần thánh. Lạc đường giữa các dãy nhà KHTN và những bữa cơm trưa 20k cổng trường.",
-      quote: "Chạy không lỗi là may mắn, chạy đúng kết quả là phép màu!",
-      emoji: "🐣",
-      color: "from-sky-50 to-blue-50 border-sky-200"
-    },
-    {
-      year: "Năm 2",
-      title: "Cấu trúc dữ liệu & Đồ án thâu đêm",
-      period: "2023 - 2024",
-      tag: "OOP • Giải thuật • Cà phê đen",
-      desc: "Những cây nhị phân, thuật toán đồ thị và những đêm thức trắng cùng đồng đội chạy deadline. Cà phê không đường trở thành thức uống thiết yếu mỗi mùa thi.",
-      quote: "Deadline không tự mất đi, chỉ chuyển từ môn này sang môn khác.",
-      emoji: "☕",
-      color: "from-amber-50 to-yellow-50 border-amber-200"
-    },
-    {
-      year: "Năm 3",
-      title: "Thực tập & Va chạm thực tế",
-      period: "2024 - 2025",
-      tag: "Git rebase • Internship • Production",
-      desc: "Bước ra môi trường doanh nghiệp, làm quen với văn hoá code review, fix 1 bug mọc thêm 10 bugs nhưng bù lại học thêm được vô vàn kỹ năng thực chiến.",
-      quote: "Code chạy được trên máy em thật mà anh!",
-      emoji: "💻",
-      color: "from-emerald-50 to-teal-50 border-emerald-200"
-    },
-    {
-      year: "Năm 4",
-      title: "Khóa luận tốt nghiệp & Về đích",
-      period: "2025 - 2026",
-      tag: "Thesis • Bachelor • Cử nhân IT",
-      desc: "Bảo vệ thành công khóa luận tốt nghiệp trước hội đồng khoa CNTT. Khép lại 4 năm sinh viên đầy ắp kỷ niệm để sẵn sàng bay xa.",
-      quote: "Câu chuyện thời sinh viên đã trọn vẹn, cảm ơn vì tất cả!",
-      emoji: "🎓",
-      color: "from-rose-50 to-orange-50 border-rose-200"
-    }
-  ];
 
   // Google Calendar Link generator
   const getGoogleCalendarUrl = () => {
@@ -192,51 +150,8 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
         </div>
       </div>
 
-      {/* University Journey (Tiểu sử 4 năm nhẹ nhàng) */}
-      <div className="mb-14">
-        <div className="text-center max-w-2xl mx-auto mb-8">
-          <span className="text-xs font-bold tracking-widest text-amber-600 uppercase bg-amber-100/80 px-3 py-1 rounded-full">
-            Journey • 2022 - 2026
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-900 mt-2">
-            Hành Trình 4 Năm Đại Học Nhẹ Nhàng
-          </h2>
-          <p className="text-sm text-slate-500 mt-1">
-            Những cột mốc đáng nhớ từ ngày đầu bước vào cổng KHTN cho đến ngày cầm tấm bằng trên tay
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {yearsData.map((item, index) => (
-            <div 
-              key={index}
-              className={`bg-gradient-to-b ${item.color} p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col justify-between`}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-2xl">{item.emoji}</span>
-                  <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-white/90 text-slate-700 shadow-sm border border-slate-200/50">
-                    {item.period}
-                  </span>
-                </div>
-                <h3 className="font-display font-bold text-slate-900 text-lg">
-                  {item.year}: {item.title}
-                </h3>
-                <div className="text-[11px] font-mono text-slate-500 font-medium my-2">
-                  {item.tag}
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed font-sans mt-2">
-                  {item.desc}
-                </p>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-slate-200/60 font-handwriting text-base text-slate-700 italic">
-                "{item.quote}"
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Memory Scrapbook Album (Thay thế phần tiểu sử 4 năm bằng album ảnh kỷ niệm) */}
+      <MemoryAlbum />
 
       {/* Option Selector: Chọn buổi đến chụp ảnh */}
       <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
