@@ -14,17 +14,17 @@ export default function Section2CrossyRoadMap() {
       id: "nowzone",
       priority: 1,
       priorityLabel: "ƯU TIÊN 1",
-      name: "TTTM Nowzone",
+      name: "Bãi xe Nowzone",
       badge: "Lựa chọn số 1 ⭐⭐⭐⭐⭐",
       badgeColor: "bg-emerald-500 text-white",
-      address: "235 Nguyễn Văn Cừ (Góc Nguyễn Văn Cừ & An Dương Vương)",
+      address: "235 Nguyễn Văn Cừ, Cầu Ông Lãnh, Hồ Chí Minh",
       distance: "~200m đi bộ (3 phút)",
       capacity: "Rất lớn (Ô tô & Xe máy)",
-      price: "10.000đ - 15.000đ",
+      price: "5.000đ",
       recommendLevel: "RẤT KHUYẾN KHÍCH",
       recommendColor: "text-emerald-700 bg-emerald-50 border-emerald-300",
-      pros: "Hầm xe rộng rãi, máy lạnh mát rượi, bảo vệ chuyên nghiệp, 100% không lo hết chỗ vào ngày lễ.",
-      cons: "Mất 3 phút đi bộ tản bộ qua cổng KHTN.",
+      pros: "Hầm xe rộng rãi, 100% không lo hết chỗ vào ngày lễ.",
+      cons: "Phải sang đường, đi bộ thêm 1 khoảng hơi lâu nữa",
       googleMapsUrl: "https://maps.app.goo.gl/uYtkmbGVDWaaZ7bHA",
       icon: "🏬"
     },
@@ -32,55 +32,55 @@ export default function Section2CrossyRoadMap() {
       id: "lhp",
       priority: 2,
       priorityLabel: "ƯU TIÊN 2",
-      name: "THPT Chuyên Lê Hồng Phong",
+      name: "Bãi xe THPT Chuyên LHP",
       badge: "Lựa chọn an toàn ⭐⭐⭐⭐",
       badgeColor: "bg-blue-500 text-white",
-      address: "280 An Dương Vương, P.4, Q.5 (Đối diện xéo KHTN)",
+      address: "235 Nguyễn Văn Cừ, Chợ Quán, Hồ Chí Minh",
       distance: "~100m đi bộ (2 phút)",
       capacity: "Trung bình - Lớn (Xe máy)",
-      price: "5.000đ - 10.000đ",
+      price: "4.000đ",
       recommendLevel: "KHUYẾN KHÍCH",
       recommendColor: "text-blue-700 bg-blue-50 border-blue-300",
-      pros: "Sân trường rợp bóng cây cổ thụ mát mẻ, an ninh tốt, đi bộ sang cổng KHTN chỉ 2 phút.",
-      cons: "Ưu tiên xe máy, thường đông từ 10h trưa.",
+      pros: "Mình hay gửi đây, dễ gửi dễ lấy không cần phải đợi lâu.",
+      cons: "Chắc không có đâu",
       googleMapsUrl: "https://maps.app.goo.gl/GDKASLir5XvnroQh7",
       icon: "🏫"
     },
     {
       id: "khtn",
-      priority: 3,
-      priorityLabel: "ƯU TIÊN 3",
-      name: "ĐH Khoa học Tự nhiên (KHTN)",
+      priority: 4,
+      priorityLabel: "ƯU TIÊN 4",
+      name: "bãi xe ĐH KHTN",
       badge: "Ngay tại trường ⭐⭐⭐",
       badgeColor: "bg-amber-500 text-white",
-      address: "227 Nguyễn Văn Cừ, P. Chợ Quán, Q.5",
+      address: "227 Nguyễn Văn Cừ, P. Chợ Quán, Hồ Chí Minh",
       distance: "0m (Bước lên là tới sân trường)",
       capacity: "Bãi xe sinh viên KHTN",
-      price: "5.000đ",
-      recommendLevel: "CẦN ĐẾN SỚM",
+      price: "4.000đ",
+      recommendLevel: "Không khuyến khích",
       recommendColor: "text-amber-700 bg-amber-50 border-amber-300",
-      pros: "Gửi xong đi thẳng vào khu vực sân khấu chụp ảnh với Bảo, có sơ đồ map.png hướng dẫn cách đi.",
-      cons: "⚠️ CỰC KỲ DỄ FULL CHỖ VÀO NGÀY LỄ TỐT NGHIỆP! Khuyên bạn phải đến trước 10:30 ít nhất 30 phút.",
+      pros: "Ngay trong trường, tiện đi lên sân trường.",
+      cons: "Hơi chật với lại phải đến sớm trước 9:00 thì may ra còn chỗ =)))",
       googleMapsUrl: "https://maps.app.goo.gl/zoMs42Yr9ZaQbbBNA",
       icon: "🎓"
     },
     {
       id: "sp",
-      priority: 4,
-      priorityLabel: "ƯU TIÊN 4",
-      name: "Đại học Sư Phạm (HCMUE)",
-      badge: "Không khuyến khích :\"( ⚠️",
+      priority: 3,
+      priorityLabel: "ƯU TIÊN 3",
+      name: "Bãi xe ĐH Sư phạm",
+      badge: "Thích thì gửi thôi",
       badgeColor: "bg-rose-500 text-white",
-      address: "280 An Dương Vương, P.4, Q.5 (Sát vách KHTN)",
+      address: "280 An Dương Vương, Chợ Quán, Hồ Chí Minh",
       distance: "~50m đi bộ",
       capacity: "Xe máy",
       price: "5.000đ",
-      recommendLevel: "KHÔNG NÊN VÀO :\"",
+      recommendLevel: "Sao cũng được",
       recommendColor: "text-rose-700 bg-rose-50 border-rose-300",
-      pros: "Vị trí sát vách trường KHTN.",
-      cons: "❌ BẢO VỆ KHÁ KHÓ TÍNH! Ngày lễ tốt nghiệp thường kiểm tra thẻ sinh viên Sư Phạm nghiêm ngặt, khách ngoài rất dễ bị từ chối bắt quay đầu.",
+      pros: "Bãi xe rộng rãi",
+      cons: "Hên xui hết chỗ, tội nghiệp sv sư phạm bị chiếm chỗ =))",
       googleMapsUrl: "https://maps.app.goo.gl/uMwfRXAAG4qNJHz6A",
-      icon: "🚫"
+      icon: "🏫"
     }
   ];
 
@@ -105,11 +105,10 @@ export default function Section2CrossyRoadMap() {
           <span>🗺️</span> Campus Navigation & Parking Guide
         </div>
         <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-slate-900 tracking-tight">
-          Hướng Dẫn Chỗ Gửi Xe & Sơ Đồ Đến KHTN
+          Hướng dẫn gửi xe
         </h2>
         <p className="text-sm sm:text-base text-slate-600 mt-2 font-sans">
-          Sơ đồ thực tế toàn cảnh khu vực KHTN và 4 bãi xe theo thứ tự ưu tiên, 
-          kèm link Google Maps và hình ảnh hướng dẫn lối đi vào sân trường!
+          Nên ưu tiên bãi xe Nowzone và THPT Chuyên Lê Hồng Phong nha mọi người ^^
         </p>
       </div>
 
@@ -122,10 +121,7 @@ export default function Section2CrossyRoadMap() {
           <div className="w-full flex items-center justify-between text-xs font-sans font-bold text-slate-700 mb-3 px-1 select-none">
             <span className="flex items-center gap-2">
               <Map className="w-4 h-4 text-blue-600" />
-              SƠ ĐỒ VỆ TINH TOÀN CẢNH KHTN
-            </span>
-            <span className="text-xs font-mono bg-blue-50 text-blue-700 px-2.5 py-0.5 rounded-full border border-blue-200">
-              map.png
+              Bản đồ Trường ĐH KHTN, ĐHQG-TPHCM
             </span>
           </div>
 
@@ -309,7 +305,7 @@ export default function Section2CrossyRoadMap() {
           <div className="bg-amber-100/70 border border-amber-300/80 rounded-2xl p-4 flex items-center gap-3 text-xs sm:text-sm text-amber-900">
             <span className="text-2xl">💡</span>
             <div>
-              <strong>Lời khuyên từ Bảo Đinh:</strong> Bạn nên ưu tiên gửi ở <strong>Ưu tiên 1: TTTM Nowzone</strong> (rộng rãi, mát mẻ không lo hết chỗ) hoặc <strong>Ưu tiên 2: THPT Lê Hồng Phong</strong>. Sau đó tản bộ vào cổng KHTN theo sơ đồ <strong>map.png</strong> là thuận tiện nhất!
+              <strong>Tips:</strong> Nên ưu tiên gửi ở <strong>Nowzone</strong> hoặc <strong>Lê Hồng Phong</strong> xong đi bộ qua KHTN là thuận tiện nhất!
             </div>
           </div>
 
