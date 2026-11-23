@@ -55,10 +55,10 @@ export default function App() {
 
           <div className="space-y-2">
             <h3 className="font-display font-extrabold text-xl sm:text-2xl text-slate-900">
-              Đinh Nguyễn Gia Bảo • HCMUS IT Graduate
+              Bao Dinh • HCMUS Graduation • 2026
             </h3>
             <p className="font-handwriting text-2xl sm:text-3xl text-slate-700 max-w-2xl mx-auto leading-relaxed">
-              "Vậy là câu chuyện thời sinh viên của Bảo Đinh đến đây là hết rồi. Trước khi nói lời tạm biệt, cùng nhau lưu giữ những khoảnh khắc cuối cùng nhé! ^^"
+              "Goodbye for now, see ya later!"
             </p>
           </div>
 

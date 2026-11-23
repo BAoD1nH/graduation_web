@@ -34,7 +34,7 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
         isAnon: true,
         tag: "Đồng đội chạy đồ án",
         vibe: "Sẵn sàng làm phó nháy 📸",
-        text: "Chúc mừng Bảo Đinh tốt nghiệp! 4 năm thâu đêm làm đồ án đã được đền đáp xứng đáng. Ra trường sự nghiệp thăng hoa nhé!",
+        text: "Chúc mừng m tốt nghiệp! chúc bờ rô ra trường sự nghiệp thăng hoa nha!",
         sticker: "🚀",
         time: "Vừa xong"
       },
@@ -42,9 +42,9 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
         id: 2,
         displayName: "Bạn học KHTN (Ẩn danh)",
         isAnon: true,
-        tag: "Bạn cùng khóa IT",
+        tag: "Bạn cùng khóa",
         vibe: "Đến chung vui hết mình 🥳",
-        text: "Nhất định ngày 26/11 sẽ đến quẩy banh nóc sân trường cùng Bảo! Chúc mừng tân cử nhân!",
+        text: "Oke, tới đó quẩy banh nóc!",
         sticker: "💐",
         time: "15 phút trước"
       },
@@ -794,11 +794,8 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
                 <span className="text-2xl">📌</span>
                 <div>
                   <h3 className="font-display font-bold text-slate-900 text-lg">
-                    Sổ Lưu Bút Kỷ Niệm ({wishes.length})
-                  </h3>
-                  <p className="text-xs text-slate-500 font-sans">
-                    Những lời nhắn nhủ (hỗ trợ ẩn danh) gửi trao đến Bảo Đinh
-                  </p>
+                    Lời chúc muốn nhắn gửi ({wishes.length})
+                  </h3> 
                 </div>
               </div>
 
