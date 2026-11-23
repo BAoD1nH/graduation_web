@@ -76,7 +76,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
 
   useEffect(() => {
     // Target dates
-    const targetDate = (selectedOption === 'option1' || selectedOption === 'both')
+    const targetDate = selectedOption === 'option1'
       ? new Date('2026-11-26T11:00:00+07:00').getTime()
       : new Date('2026-12-06T08:30:00+07:00').getTime();
 
@@ -112,7 +112,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
     if (selectedOption === 'option2') {
       return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=L%E1%BB%85+T%E1%BB%91t+Nghi%E1%BB%87p+B%E1%BA%A3o+%C4%90inh+(L%E1%BB%85+Khoa+CNTT)&dates=20261206T013000Z/20261206T043000Z&details=Ch%E1%BB%A5p+%E1%BA%A3nh+k%E1%BB%B7+ni%E1%BB%87m+c%C3%B9ng+B%E1%BA%A3o+%C4%90inh+(L%E1%BB%85+Khoa+CNTT)+t%E1%BA%A1i+KHTN.+Hotline:+0358180131&location=227+Nguy%E1%BB%85n+V%C4%83n+C%E1%BB%AB,+Ph%C6%B0%E1%BB%9Dng+Ch%E1%BB%A3+Qu%C3%A1n,+Qu%E1%BA%ADn+5,+TP.HCM";
     }
-    // option1 or both → show Lễ Trường (earliest date)
+    // option1 shows the school ceremony.
     return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=L%E1%BB%85+T%E1%BB%91t+Nghi%E1%BB%87p+B%E1%BA%A3o+%C4%90inh+(L%E1%BB%85+Tr%C6%B0%E1%BB%9Dng)&dates=20261126T040000Z/20261126T053000Z&details=Ch%E1%BB%A5p+%E1%BA%A3nh+k%E1%BB%B7+ni%E1%BB%87m+c%C3%B9ng+B%E1%BA%A3o+%C4%90inh+t%E1%BA%A1i+S%C3%A2n+tr%C6%B0%E1%BB%9Dng+KHTN.+Hotline:+0358180131&location=227+Nguy%E1%BB%85n+V%C4%83n+C%E1%BB%AB,+Ph%C6%B0%E1%BB%9Dng+Ch%E1%BB%A3+Qu%C3%A1n,+Qu%E1%BA%ADn+5,+TP.HCM";
   };
 
@@ -293,7 +293,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
             Hãy chọn buổi nào bạn thấy thoải mái nhất bên dưới nhé!
           </p>
 
-          {/* 2 Options Cards + Option 3 */}
+          {/* Two ceremony options */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 text-left">
             
             {/* OPTION 1 */}
@@ -364,31 +364,6 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
               <div className="mt-3 inline-block text-[11px] font-semibold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
                 💻 Lễ tốt nghiệp cấp Khoa của Khoa CNTT
               </div>
-            </div>
-
-            {/* OPTION 3: Tham dự cả 2 */}
-            <div
-              onClick={() => handleSelectOption('both')}
-              className={`cursor-pointer rounded-2xl p-5 border-2 transition-all relative md:col-span-2 ${
-                selectedOption === 'both'
-                  ? 'bg-emerald-900/40 border-emerald-400 shadow-lg shadow-emerald-500/20 scale-[1.01]'
-                  : 'bg-slate-800/60 border-slate-700 hover:border-slate-500 opacity-80 hover:opacity-100'
-              }`}
-            >
-              {selectedOption === 'both' && (
-                <div className="absolute top-3 right-3 bg-emerald-500 text-white p-1 rounded-full">
-                  <CheckCircle2 className="w-4 h-4" />
-                </div>
-              )}
-              <div className="text-xs font-mono font-bold text-emerald-300 uppercase tracking-wider mb-1">
-                Option 3 • Tham Dự Cả 2 🎉
-              </div>
-              <h3 className="text-lg font-bold text-white mb-1">
-                Thứ 5 (26.11) & Chủ Nhật (06.12.2026)
-              </h3>
-              <p className="text-xs text-slate-400 font-sans">
-                Tham dự cả Lễ Tốt Nghiệp cấp Trường lẫn Lễ Khoa CNTT — đếm ngược sẽ hiển thị theo ngày gần nhất (26.11).
-              </p>
             </div>
 
           </div>
