@@ -257,7 +257,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
                     {currentCard.caption}
                   </p>
                   <p className="text-[11px] text-slate-400 mt-1 uppercase tracking-wider font-semibold">
-                    Kỷ niệm thời sinh viên • 2022 - 2026
+                    Niên khoá • 2022 - 2026
                   </p>
                 </div>
               </div>
