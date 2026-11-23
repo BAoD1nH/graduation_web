@@ -1,17 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MapPin, Navigation, AlertTriangle, CheckCircle2, Car, Info, Footprints, ExternalLink, Sparkles, Volume2 } from 'lucide-react';
+import { 
+  MapPin, ExternalLink, Navigation, Sparkles, CheckCircle2, 
+  AlertTriangle, Map, Image as ImageIcon, ZoomIn, X, Download, Footprints 
+} from 'lucide-react';
 import { sound } from '../utils/audio';
 
 export default function Section2CrossyRoadMap() {
-  const [selectedSpot, setSelectedSpot] = useState(0); // Default to Nowzone
-  const [chickenPos, setChickenPos] = useState({ x: 180, y: 320 });
-  const [score, setScore] = useState(0);
+  const [selectedSpot, setSelectedSpot] = useState(0); // Default to Nowzone (Priority 1)
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
+  const [activeViewTab, setActiveViewTab] = useState('crossy'); // 'crossy' or 'satellite'
   const canvasRef = useRef(null);
 
   const parkingSpots = [
     {
       id: "nowzone",
-      name: "Bãi xe TTTM Nowzone",
+      priority: 1,
+      priorityLabel: "ƯU TIÊN 1",
+      name: "TTTM Nowzone",
       badge: "Lựa chọn số 1 ⭐⭐⭐⭐⭐",
       badgeColor: "bg-emerald-500 text-white",
       address: "235 Nguyễn Văn Cừ (Góc Nguyễn Văn Cừ & An Dương Vương)",
@@ -20,15 +25,17 @@ export default function Section2CrossyRoadMap() {
       price: "10.000đ - 15.000đ",
       recommendLevel: "RẤT KHUYẾN KHÍCH",
       recommendColor: "text-emerald-700 bg-emerald-50 border-emerald-300",
-      pros: "Hầm xe rộng rãi, mát lạnh có máy lạnh, bảo vệ chuyên nghiệp, 100% không lo hết chỗ vào ngày lễ.",
+      pros: "Hầm xe rộng rãi, máy lạnh mát rượi, bảo vệ chuyên nghiệp, 100% không lo hết chỗ vào ngày lễ.",
       cons: "Mất 3 phút đi bộ tản bộ qua cổng KHTN.",
-      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=TTTM+Nowzone+235+Nguyen+Van+Cu",
-      targetCoords: { x: 90, y: 130 },
+      googleMapsUrl: "https://maps.app.goo.gl/uYtkmbGVDWaaZ7bHA",
+      targetCoords: { x: 100, y: 110 },
       icon: "🏬"
     },
     {
       id: "lhp",
-      name: "Bãi xe THPT Chuyên Lê Hồng Phong",
+      priority: 2,
+      priorityLabel: "ƯU TIÊN 2",
+      name: "THPT Chuyên Lê Hồng Phong",
       badge: "Lựa chọn an toàn ⭐⭐⭐⭐",
       badgeColor: "bg-blue-500 text-white",
       address: "280 An Dương Vương, P.4, Q.5 (Đối diện xéo KHTN)",
@@ -37,15 +44,17 @@ export default function Section2CrossyRoadMap() {
       price: "5.000đ - 10.000đ",
       recommendLevel: "KHUYẾN KHÍCH",
       recommendColor: "text-blue-700 bg-blue-50 border-blue-300",
-      pros: "Sân trường râm mát nhiều cây cổ thụ, an ninh tốt, đi bộ qua cổng trường KHTN rất nhanh.",
+      pros: "Sân trường rợp bóng cây cổ thụ mát mẻ, an ninh tốt, đi bộ sang cổng KHTN chỉ 2 phút.",
       cons: "Ưu tiên xe máy, thường đông từ 10h trưa.",
-      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=THPT+Chuyen+Le+Hong+Phong+TPHCM",
-      targetCoords: { x: 260, y: 140 },
+      googleMapsUrl: "https://maps.app.goo.gl/GDKASLir5XvnroQh7",
+      targetCoords: { x: 280, y: 120 },
       icon: "🏫"
     },
     {
       id: "khtn",
-      name: "Bãi xe ĐH Khoa học Tự nhiên",
+      priority: 3,
+      priorityLabel: "ƯU TIÊN 3",
+      name: "ĐH Khoa học Tự nhiên (KHTN)",
       badge: "Ngay tại trường ⭐⭐⭐",
       badgeColor: "bg-amber-500 text-white",
       address: "227 Nguyễn Văn Cừ, P. Chợ Quán, Q.5",
@@ -54,15 +63,17 @@ export default function Section2CrossyRoadMap() {
       price: "5.000đ",
       recommendLevel: "CẦN ĐẾN SỚM",
       recommendColor: "text-amber-700 bg-amber-50 border-amber-300",
-      pros: "Gửi xong đi thẳng vào khu vực sân khấu chụp ảnh với Bảo, không phải đi bộ ngoài đường.",
+      pros: "Gửi xong đi thẳng vào khu vực sân khấu chụp ảnh với Bảo, có sơ đồ map.png hướng dẫn cách đi.",
       cons: "⚠️ CỰC KỲ DỄ FULL CHỖ VÀO NGÀY LỄ TỐT NGHIỆP! Khuyên bạn phải đến trước 10:30 ít nhất 30 phút.",
-      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=227+Nguyen+Van+Cu+HCMUS",
+      googleMapsUrl: "https://maps.app.goo.gl/zoMs42Yr9ZaQbbBNA",
       targetCoords: { x: 190, y: 220 },
       icon: "🎓"
     },
     {
       id: "sp",
-      name: "Bãi xe ĐH Sư Phạm (HCMUE)",
+      priority: 4,
+      priorityLabel: "ƯU TIÊN 4",
+      name: "Đại học Sư Phạm (HCMUE)",
       badge: "Không khuyến khích :\"( ⚠️",
       badgeColor: "bg-rose-500 text-white",
       address: "280 An Dương Vương, P.4, Q.5 (Sát vách KHTN)",
@@ -71,55 +82,15 @@ export default function Section2CrossyRoadMap() {
       price: "5.000đ",
       recommendLevel: "KHÔNG NÊN VÀO :\"",
       recommendColor: "text-rose-700 bg-rose-50 border-rose-300",
-      pros: "Vị trí rất gần trường KHTN.",
+      pros: "Vị trí sát vách trường KHTN.",
       cons: "❌ BẢO VỆ KHÁ KHÓ TÍNH! Ngày lễ tốt nghiệp thường kiểm tra thẻ sinh viên Sư Phạm nghiêm ngặt, khách ngoài rất dễ bị từ chối bắt quay đầu.",
-      googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Dai+hoc+Su+Pham+TPHCM+280+An+Duong+Vuong",
-      targetCoords: { x: 310, y: 280 },
+      googleMapsUrl: "https://maps.app.goo.gl/uMwfRXAAG4qNJHz6A",
+      targetCoords: { x: 310, y: 290 },
       icon: "🚫"
     }
   ];
 
-  // Hop Chicken
-  const hopChicken = (dx, dy) => {
-    sound.playHop();
-    setChickenPos(prev => {
-      const newX = Math.max(30, Math.min(370, prev.x + dx));
-      const newY = Math.max(40, Math.min(380, prev.y + dy));
-      return { x: newX, y: newY };
-    });
-    setScore(s => s + 1);
-  };
-
-  // Keyboard controls
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (['ArrowUp', 'KeyW'].includes(e.code)) {
-        e.preventDefault();
-        hopChicken(0, -25);
-      } else if (['ArrowDown', 'KeyS'].includes(e.code)) {
-        e.preventDefault();
-        hopChicken(0, 25);
-      } else if (['ArrowLeft', 'KeyA'].includes(e.code)) {
-        e.preventDefault();
-        hopChicken(-25, 0);
-      } else if (['ArrowRight', 'KeyD'].includes(e.code)) {
-        e.preventDefault();
-        hopChicken(25, 0);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
-  // Jump to specific parking spot
-  const selectSpot = (index) => {
-    sound.playHop();
-    setSelectedSpot(index);
-    const target = parkingSpots[index].targetCoords;
-    setChickenPos({ x: target.x, y: target.y + 25 });
-  };
-
-  // Animated Crossy Road Canvas
+  // Animated Crossy Road Isometric Map Canvas (No game controls, just aesthetic visual map)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -127,84 +98,59 @@ export default function Section2CrossyRoadMap() {
     let animationId;
     let tick = 0;
 
-    // Moving elements
+    // Moving voxel cars
     const cars = [
-      { x: 20, y: 175, speed: 1.8, color: '#38bdf8', len: 45 },
-      { x: 190, y: 175, speed: 1.8, color: '#fb923c', len: 40 },
-      { x: 280, y: 250, speed: -1.5, color: '#facc15', len: 50 },
-      { x: 100, y: 250, speed: -1.5, color: '#ec4899', len: 42 },
-      { x: 50, y: 310, speed: 2.2, color: '#4ade80', len: 40 }
-    ];
-
-    const logs = [
-      { x: 30, y: 80, speed: 1.2, len: 65 },
-      { x: 180, y: 80, speed: 1.2, len: 75 },
-      { x: 320, y: 80, speed: 1.2, len: 60 }
+      { x: 30, y: 165, speed: 1.5, color: '#38bdf8', len: 45 },
+      { x: 210, y: 165, speed: 1.5, color: '#fb923c', len: 40 },
+      { x: 320, y: 255, speed: -1.3, color: '#facc15', len: 50 },
+      { x: 140, y: 255, speed: -1.3, color: '#ec4899', len: 42 },
+      { x: 70, y: 325, speed: 1.8, color: '#4ade80', len: 40 }
     ];
 
     const render = () => {
       tick++;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // --- Background: Isometric / Voxel Style Lanes ---
+      // --- Background: Voxel / Isometric Lanes ---
       
       // Top grass zone (Nowzone & LHP area)
       ctx.fillStyle = '#6bc752';
-      ctx.fillRect(0, 0, 400, 70);
-      // Grass voxel pattern
+      ctx.fillRect(0, 0, 400, 65);
       ctx.fillStyle = '#59b042';
       for (let i = 0; i < 400; i += 30) {
-        ctx.fillRect(i, 0, 15, 70);
+        ctx.fillRect(i, 0, 15, 65);
       }
 
-      // River / Canal
+      // River canal
       ctx.fillStyle = '#38bdf8';
-      ctx.fillRect(0, 70, 400, 35);
-      // River ripples
+      ctx.fillRect(0, 65, 400, 30);
       ctx.fillStyle = '#7dd3fc';
-      ctx.fillRect((tick % 80) * 5, 82, 40, 4);
-      ctx.fillRect(((tick + 30) % 80) * 5, 92, 35, 3);
-
-      // River logs floating
-      logs.forEach(log => {
-        log.x += log.speed;
-        if (log.x > 420) log.x = -log.len;
-        // Draw wood log
-        ctx.fillStyle = '#854d0e';
-        ctx.fillRect(log.x, log.y, log.len, 16);
-        ctx.fillStyle = '#a16207';
-        ctx.fillRect(log.x + 4, log.y + 2, log.len - 8, 12);
-        // Log rings
-        ctx.fillStyle = '#ca8a04';
-        ctx.beginPath();
-        ctx.arc(log.x + 3, log.y + 8, 4, 0, Math.PI * 2);
-        ctx.fill();
-      });
+      ctx.fillRect((tick % 70) * 6, 75, 40, 4);
 
       // Middle Grass strip
       ctx.fillStyle = '#6bc752';
-      ctx.fillRect(0, 105, 400, 50);
+      ctx.fillRect(0, 95, 400, 50);
       ctx.fillStyle = '#59b042';
       for (let i = 0; i < 400; i += 30) {
-        ctx.fillRect(i, 105, 15, 50);
+        ctx.fillRect(i, 95, 15, 50);
       }
 
-      // Main Road 1 (Nguyen Van Cu Ave)
+      // Main Road 1: Nguyen Van Cu Ave
       ctx.fillStyle = '#334155';
-      ctx.fillRect(0, 155, 400, 50);
-      // Road markings
+      ctx.fillRect(0, 145, 400, 50);
+      // Dashed lane markings
       ctx.fillStyle = '#f8fafc';
       for (let x = 10; x < 400; x += 35) {
-        ctx.fillRect(x, 178, 18, 4);
+        ctx.fillRect(x, 168, 18, 4);
       }
 
       // Middle Campus Entrance Grass (KHTN Campus Yard)
       ctx.fillStyle = '#4ade80';
-      ctx.fillRect(0, 205, 400, 30);
+      ctx.fillRect(0, 195, 400, 40);
       ctx.fillStyle = '#22c55e';
-      ctx.fillRect(0, 215, 400, 10);
+      ctx.fillRect(0, 208, 400, 14);
 
-      // Main Road 2 (An Duong Vuong Ave)
+      // Main Road 2: An Duong Vuong Ave
       ctx.fillStyle = '#334155';
       ctx.fillRect(0, 235, 400, 50);
       ctx.fillStyle = '#f8fafc';
@@ -212,36 +158,23 @@ export default function Section2CrossyRoadMap() {
         ctx.fillRect(x, 258, 18, 4);
       }
 
-      // Secondary Road 3
+      // Secondary road
       ctx.fillStyle = '#475569';
-      ctx.fillRect(0, 295, 400, 45);
+      ctx.fillRect(0, 305, 400, 45);
       ctx.fillStyle = '#cbd5e1';
       for (let x = 5; x < 400; x += 30) {
-        ctx.fillRect(x, 316, 14, 3);
+        ctx.fillRect(x, 326, 14, 3);
       }
 
-      // Bottom Grass strip (Starting Point)
+      // Bottom Grass strip
       ctx.fillStyle = '#6bc752';
-      ctx.fillRect(0, 340, 400, 60);
+      ctx.fillRect(0, 350, 400, 50);
       ctx.fillStyle = '#59b042';
       for (let i = 0; i < 400; i += 30) {
-        ctx.fillRect(i, 340, 15, 60);
+        ctx.fillRect(i, 350, 15, 50);
       }
 
-      // Train track at bottom
-      ctx.fillStyle = '#64748b';
-      ctx.fillRect(0, 365, 400, 16);
-      // Railroad ties
-      ctx.fillStyle = '#78350f';
-      for (let x = 0; x < 400; x += 15) {
-        ctx.fillRect(x, 362, 7, 22);
-      }
-      // Rails
-      ctx.fillStyle = '#e2e8f0';
-      ctx.fillRect(0, 368, 400, 3);
-      ctx.fillRect(0, 375, 400, 3);
-
-      // --- Moving Cars ---
+      // --- Moving Voxel Cars ---
       cars.forEach(car => {
         car.x += car.speed;
         if (car.speed > 0 && car.x > 420) car.x = -car.len;
@@ -249,43 +182,41 @@ export default function Section2CrossyRoadMap() {
 
         // Voxel car body
         ctx.fillStyle = car.color;
-        ctx.fillRect(car.x, car.y - 12, car.len, 24);
+        ctx.fillRect(car.x, car.y - 10, car.len, 20);
         // Cabin
         ctx.fillStyle = '#f8fafc';
-        ctx.fillRect(car.x + (car.speed > 0 ? 10 : 8), car.y - 10, car.len - 18, 20);
+        ctx.fillRect(car.x + (car.speed > 0 ? 8 : 6), car.y - 8, car.len - 15, 16);
         // Roof
         ctx.fillStyle = car.color;
-        ctx.fillRect(car.x + (car.speed > 0 ? 14 : 12), car.y - 8, car.len - 26, 16);
+        ctx.fillRect(car.x + (car.speed > 0 ? 12 : 10), car.y - 6, car.len - 22, 12);
         // Headlights
         ctx.fillStyle = '#fef08a';
         if (car.speed > 0) {
-          ctx.fillRect(car.x + car.len - 2, car.y - 10, 3, 5);
-          ctx.fillRect(car.x + car.len - 2, car.y + 5, 3, 5);
+          ctx.fillRect(car.x + car.len - 2, car.y - 8, 3, 4);
+          ctx.fillRect(car.x + car.len - 2, car.y + 4, 3, 4);
         } else {
-          ctx.fillRect(car.x - 1, car.y - 10, 3, 5);
-          ctx.fillRect(car.x - 1, car.y + 5, 3, 5);
+          ctx.fillRect(car.x - 1, car.y - 8, 3, 4);
+          ctx.fillRect(car.x - 1, car.y + 4, 3, 4);
         }
       });
 
       // --- Voxel Trees around map ---
       const trees = [
-        { x: 30, y: 35 }, { x: 360, y: 35 },
-        { x: 140, y: 125 }, { x: 20, y: 125 }, { x: 370, y: 125 },
-        { x: 40, y: 220 }, { x: 360, y: 220 },
-        { x: 20, y: 345 }, { x: 370, y: 345 }
+        { x: 25, y: 30 }, { x: 365, y: 30 },
+        { x: 180, y: 110 }, { x: 20, y: 110 }, { x: 365, y: 110 },
+        { x: 30, y: 210 }, { x: 365, y: 210 },
+        { x: 20, y: 365 }, { x: 370, y: 365 }
       ];
       trees.forEach(t => {
-        // Tree trunk (voxel)
         ctx.fillStyle = '#78350f';
-        ctx.fillRect(t.x + 6, t.y + 14, 6, 12);
-        // Tree leaves (voxel cube)
+        ctx.fillRect(t.x + 5, t.y + 12, 5, 10);
         ctx.fillStyle = '#15803d';
-        ctx.fillRect(t.x, t.y, 18, 16);
+        ctx.fillRect(t.x, t.y, 16, 14);
         ctx.fillStyle = '#22c55e';
-        ctx.fillRect(t.x + 2, t.y + 2, 14, 12);
+        ctx.fillRect(t.x + 2, t.y + 2, 12, 10);
       });
 
-      // --- Draw Parking Spots Landmarks ---
+      // --- Draw Parking Landmark Pins on the Map ---
       parkingSpots.forEach((spot, idx) => {
         const isSelected = selectedSpot === idx;
         const target = spot.targetCoords;
@@ -293,7 +224,7 @@ export default function Section2CrossyRoadMap() {
         // Voxel building pad
         ctx.fillStyle = isSelected ? '#fbbf24' : '#ffffff';
         ctx.beginPath();
-        ctx.roundRect(target.x - 18, target.y - 18, 36, 36, [8]);
+        ctx.roundRect(target.x - 18, target.y - 18, 36, 36, [10]);
         ctx.fill();
         ctx.lineWidth = isSelected ? 3 : 1.5;
         ctx.strokeStyle = isSelected ? '#b45309' : '#94a3b8';
@@ -305,41 +236,15 @@ export default function Section2CrossyRoadMap() {
         ctx.textBaseline = 'middle';
         ctx.fillText(spot.icon, target.x, target.y);
 
-        // Name tag label
-        ctx.font = 'bold 9px "Space Grotesk", sans-serif';
-        const labelWidth = ctx.measureText(spot.name.split(' ')[2] || spot.name).width + 8;
+        // Priority Badge Pill (Ưu tiên 1, 2, 3, 4)
+        ctx.font = 'bold 8px "Space Grotesk", sans-serif';
+        const badgeText = `#${spot.priority} ${spot.name.split(' ')[0]}`;
+        const labelWidth = ctx.measureText(badgeText).width + 8;
         ctx.fillStyle = isSelected ? '#0f172a' : 'rgba(15, 23, 42, 0.85)';
         ctx.fillRect(target.x - labelWidth / 2, target.y + 22, labelWidth, 14);
         ctx.fillStyle = isSelected ? '#facc15' : '#ffffff';
-        ctx.fillText(spot.name.split(' ')[2] || spot.name, target.x, target.y + 29);
+        ctx.fillText(badgeText, target.x, target.y + 29);
       });
-
-      // --- Draw The Crossy Road Chicken (Character) ---
-      const cx = chickenPos.x;
-      const cy = chickenPos.y;
-
-      // Chicken shadow
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
-      ctx.beginPath();
-      ctx.ellipse(cx, cy + 10, 9, 5, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Body (White Voxel cube)
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(cx - 7, cy - 8, 14, 14);
-      // Red comb
-      ctx.fillStyle = '#ef4444';
-      ctx.fillRect(cx - 3, cy - 13, 6, 6);
-      // Yellow beak
-      ctx.fillStyle = '#f59e0b';
-      ctx.fillRect(cx + 4, cy - 4, 5, 5);
-      // Eyes
-      ctx.fillStyle = '#0f172a';
-      ctx.fillRect(cx + 2, cy - 6, 2, 3);
-      // Little feet
-      ctx.fillStyle = '#f59e0b';
-      ctx.fillRect(cx - 4, cy + 6, 3, 4);
-      ctx.fillRect(cx + 1, cy + 6, 3, 4);
 
       animationId = requestAnimationFrame(render);
     };
@@ -347,129 +252,163 @@ export default function Section2CrossyRoadMap() {
     render();
 
     return () => cancelAnimationFrame(animationId);
-  }, [chickenPos, selectedSpot]);
+  }, [selectedSpot]);
 
   const activeSpot = parkingSpots[selectedSpot];
+
+  const handleSpotClick = (index) => {
+    sound.playTap();
+    setSelectedSpot(index);
+  };
 
   return (
     <section id="part2" className="py-12 px-4 sm:px-6 max-w-6xl mx-auto">
       
-      {/* Title & Crossy Road Intro */}
+      {/* Title & Introduction */}
       <div className="text-center max-w-2xl mx-auto mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider mb-2">
-          <span>🎮</span> Crossy Road Navigation System
+          <span>🚗</span> Crossy Road Style Campus & Parking Guide
         </div>
         <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-slate-900 tracking-tight">
-          Cẩm Nang Hướng Dẫn Gửi Xe
+          Hướng Dẫn Chỗ Gửi Xe & Sơ Đồ Đến KHTN
         </h2>
         <p className="text-sm sm:text-base text-slate-600 mt-2 font-sans">
-          Trường KHTN ngày lễ tốt nghiệp sẽ rất đông và bãi xe trường dễ full sớm. 
-          Bảo đã "quy hoạch" sẵn 4 bãi xe xung quanh trường để bạn tiện di chuyển nhất!
+          Bản đồ thiết kế phong cách Crossy Road trực quan với 4 bãi xe theo thứ tự ưu tiên, 
+          kèm link Google Maps và sơ đồ khuôn viên (map.png) hướng dẫn cách đi bộ vào sân trường!
         </p>
+
+        {/* View Switcher: Crossy Road Map vs Sơ đồ thực tế map.png */}
+        <div className="flex items-center justify-center gap-2 mt-5">
+          <button
+            onClick={() => {
+              sound.playTap();
+              setActiveViewTab('crossy');
+            }}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all ${
+              activeViewTab === 'crossy'
+                ? 'bg-slate-900 text-white shadow-md scale-105'
+                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+            }`}
+          >
+            <span>🎮 Bản Đồ Crossy Road</span>
+          </button>
+
+          <button
+            onClick={() => {
+              sound.playTap();
+              setActiveViewTab('satellite');
+            }}
+            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all ${
+              activeViewTab === 'satellite'
+                ? 'bg-blue-600 text-white shadow-md scale-105'
+                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+            }`}
+          >
+            <Map className="w-4 h-4" />
+            <span>🗺️ Sơ Đồ Thực Tế (map.png)</span>
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Column: Interactive Crossy Road Game Map */}
+        {/* Left Column: Crossy Road Isometric Map Canvas OR Satellite Map Preview */}
         <div className="lg:col-span-6 bg-slate-900 rounded-3xl p-4 sm:p-5 shadow-2xl border-4 border-slate-800 flex flex-col items-center">
           
-          {/* Game Top HUD */}
+          {/* Header Bar */}
           <div className="w-full flex items-center justify-between text-xs font-mono text-emerald-400 mb-2 px-1 select-none">
             <span className="flex items-center gap-1.5 font-bold">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              CROSSY HCMUS v1.0
+              {activeViewTab === 'crossy' ? 'CROSSY ROAD CAMPUS MAP' : 'SƠ ĐỒ VỆ TINH KHTN (map.png)'}
             </span>
-            <div className="flex items-center gap-3">
-              <span className="text-amber-400">HOPS: {score}</span>
-              <span className="text-slate-400 text-[11px] hidden sm:inline">Phím: W A S D / Mũi tên</span>
-            </div>
+            <span className="text-amber-400 font-bold">
+              4 ĐỊA ĐIỂM ƯU TIÊN
+            </span>
           </div>
 
-          {/* Canvas Wrapper */}
-          <div className="relative rounded-2xl overflow-hidden border-2 border-slate-700 shadow-inner bg-slate-800">
-            <canvas 
-              ref={canvasRef} 
-              width={400} 
-              height={400} 
-              className="block max-w-full h-auto cursor-pointer"
-              onClick={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const clickX = ((e.clientX - rect.left) / rect.width) * 400;
-                const clickY = ((e.clientY - rect.top) / rect.height) * 400;
+          {activeViewTab === 'crossy' ? (
+            /* Crossy Road Canvas */
+            <div className="relative rounded-2xl overflow-hidden border-2 border-slate-700 shadow-inner bg-slate-800 w-full">
+              <canvas 
+                ref={canvasRef} 
+                width={400} 
+                height={400} 
+                className="block w-full h-auto cursor-pointer"
+                onClick={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const clickX = ((e.clientX - rect.left) / rect.width) * 400;
+                  const clickY = ((e.clientY - rect.top) / rect.height) * 400;
 
-                // Check if clicked close to any spot
-                parkingSpots.forEach((spot, idx) => {
-                  const dist = Math.hypot(spot.targetCoords.x - clickX, spot.targetCoords.y - clickY);
-                  if (dist < 35) {
-                    selectSpot(idx);
-                  }
-                });
-              }}
-            />
+                  // Click on any spot landmark to select it
+                  parkingSpots.forEach((spot, idx) => {
+                    const dist = Math.hypot(spot.targetCoords.x - clickX, spot.targetCoords.y - clickY);
+                    if (dist < 35) {
+                      handleSpotClick(idx);
+                    }
+                  });
+                }}
+              />
 
-            {/* In-game quick jump overlay */}
-            <div className="absolute top-2 left-2 right-2 flex justify-between gap-1 pointer-events-auto">
-              {parkingSpots.map((spot, idx) => (
-                <button
-                  key={spot.id}
-                  onClick={() => selectSpot(idx)}
-                  className={`px-2 py-1 rounded-md text-[10px] font-mono font-bold transition-all ${
-                    selectedSpot === idx
-                      ? 'bg-amber-400 text-slate-900 shadow-md scale-105'
-                      : 'bg-slate-900/80 text-white hover:bg-slate-800'
-                  }`}
-                >
-                  {spot.name.split(' ')[2] || spot.name.split(' ')[0]}
-                </button>
-              ))}
+              {/* Click hints overlay */}
+              <div className="absolute bottom-2 inset-x-2 bg-slate-950/80 backdrop-blur-sm text-white px-3 py-1.5 rounded-xl text-[11px] flex items-center justify-between border border-white/10 select-none">
+                <span className="text-amber-300 font-mono">💡 Chạm vào các điểm trên map để xem</span>
+                <span className="text-slate-300">Đang chọn: <strong>{activeSpot.name}</strong></span>
+              </div>
             </div>
-          </div>
-
-          {/* D-Pad Controls for Mobile & Quick play */}
-          <div className="mt-4 flex flex-col items-center gap-1 select-none">
-            <div className="text-[11px] font-mono text-slate-400 mb-1">
-              Điều khiển chú gà nhảy thăm bãi xe:
-            </div>
-            <button
-              onClick={() => hopChicken(0, -25)}
-              className="w-12 h-10 bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-bold rounded-lg border border-slate-600 shadow flex items-center justify-center text-sm"
+          ) : (
+            /* Sơ Đồ Thực Tế map.png */
+            <div 
+              onClick={() => setIsMapModalOpen(true)}
+              className="relative rounded-2xl overflow-hidden border-2 border-slate-700 shadow-inner bg-slate-800 w-full aspect-square flex items-center justify-center cursor-pointer group"
+              title="Click để phóng to toàn màn hình"
             >
-              ⬆️
-            </button>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => hopChicken(-25, 0)}
-                className="w-12 h-10 bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-bold rounded-lg border border-slate-600 shadow flex items-center justify-center text-sm"
-              >
-                ⬅️
-              </button>
-              <button
-                onClick={() => hopChicken(0, 25)}
-                className="w-12 h-10 bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-bold rounded-lg border border-slate-600 shadow flex items-center justify-center text-sm"
-              >
-                ⬇️
-              </button>
-              <button
-                onClick={() => hopChicken(25, 0)}
-                className="w-12 h-10 bg-slate-800 hover:bg-slate-700 active:scale-95 text-white font-bold rounded-lg border border-slate-600 shadow flex items-center justify-center text-sm"
-              >
-                ➡️
-              </button>
+              <img
+                src="map.png"
+                alt="Sơ đồ vệ tinh trường KHTN"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-slate-950/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                <div className="px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-sm flex items-center gap-2 text-xs font-bold">
+                  <ZoomIn className="w-4 h-4 text-amber-400" />
+                  <span>Phóng to sơ đồ</span>
+                </div>
+              </div>
+              <div className="absolute bottom-2 inset-x-2 bg-slate-950/80 backdrop-blur-sm text-white px-3 py-1.5 rounded-xl text-[11px] flex items-center justify-between border border-white/10">
+                <span>📍 Sơ đồ toàn cảnh KHTN & bãi xe</span>
+                <span className="text-amber-300 font-bold">Click để phóng to</span>
+              </div>
             </div>
+          )}
+
+          {/* Quick jump pills */}
+          <div className="w-full grid grid-cols-4 gap-1.5 mt-3">
+            {parkingSpots.map((spot, idx) => (
+              <button
+                key={spot.id}
+                onClick={() => handleSpotClick(idx)}
+                className={`py-1.5 px-1 rounded-xl text-[11px] font-mono font-bold transition-all truncate text-center ${
+                  selectedSpot === idx
+                    ? 'bg-amber-400 text-slate-900 shadow-md scale-105'
+                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                }`}
+              >
+                #{spot.priority} {spot.name.split(' ')[0]}
+              </button>
+            ))}
           </div>
 
         </div>
 
-        {/* Right Column: Detailed Parking Guides */}
+        {/* Right Column: Detailed Parking Guides with Exact Google Maps Links */}
         <div className="lg:col-span-6 space-y-4">
           
-          {/* Quick Select Tabs */}
+          {/* 4 Priority Select Tabs */}
           <div className="grid grid-cols-2 gap-2">
             {parkingSpots.map((spot, idx) => (
               <button
                 key={spot.id}
-                onClick={() => selectSpot(idx)}
-                className={`p-3 rounded-2xl border text-left transition-all ${
+                onClick={() => handleSpotClick(idx)}
+                className={`p-3 rounded-2xl border text-left transition-all relative ${
                   selectedSpot === idx
                     ? 'bg-white shadow-lg border-amber-400 ring-2 ring-amber-400/20'
                     : 'bg-white/60 hover:bg-white border-slate-200 text-slate-700'
@@ -478,7 +417,7 @@ export default function Section2CrossyRoadMap() {
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-xl">{spot.icon}</span>
                   <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${spot.badgeColor}`}>
-                    {spot.id === 'sp' ? 'Cảnh báo ⚠️' : 'Bãi #' + (idx + 1)}
+                    {spot.priorityLabel}
                   </span>
                 </div>
                 <div className="font-display font-bold text-xs sm:text-sm text-slate-800 truncate">
@@ -497,9 +436,14 @@ export default function Section2CrossyRoadMap() {
             {/* Header info */}
             <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-4">
               <div>
-                <span className={`inline-block text-xs font-bold px-2.5 py-0.5 rounded-md border ${activeSpot.recommendColor} mb-1.5`}>
-                  {activeSpot.recommendLevel}
-                </span>
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className={`inline-block text-xs font-bold px-2.5 py-0.5 rounded-md border ${activeSpot.recommendColor}`}>
+                    {activeSpot.recommendLevel}
+                  </span>
+                  <span className="text-xs font-mono font-bold text-slate-400">
+                    {activeSpot.priorityLabel}
+                  </span>
+                </div>
                 <h3 className="text-xl sm:text-2xl font-display font-bold text-slate-900">
                   {activeSpot.name}
                 </h3>
@@ -524,7 +468,7 @@ export default function Section2CrossyRoadMap() {
                 <div className="text-xs sm:text-sm font-bold text-slate-800 mt-0.5">{activeSpot.capacity}</div>
               </div>
               <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-                <div className="text-[10px] text-slate-400 uppercase font-sans font-semibold">Giá gửi tham khảo</div>
+                <div className="text-[10px] text-slate-400 uppercase font-sans font-semibold">Giá tham khảo</div>
                 <div className="text-xs sm:text-sm font-bold text-emerald-600 mt-0.5">{activeSpot.price}</div>
               </div>
             </div>
@@ -550,22 +494,31 @@ export default function Section2CrossyRoadMap() {
               </div>
             </div>
 
-            {/* Action Direct Link */}
-            <div className="pt-2 flex items-center justify-between">
-              <span className="text-xs text-slate-400 flex items-center gap-1">
-                <Footprints className="w-3.5 h-3.5" />
-                Đi bộ vào cổng 227 Nguyễn Văn Cừ
-              </span>
+            {/* Action Buttons: Direct Google Maps Link + Xem map.png */}
+            <div className="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100">
+              {/* Button mở sơ đồ map.png */}
+              <button
+                onClick={() => {
+                  sound.playPop();
+                  setIsMapModalOpen(true);
+                }}
+                className="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold flex items-center gap-1.5 transition-colors border border-blue-200"
+              >
+                <Map className="w-3.5 h-3.5" />
+                <span>Xem sơ đồ KHTN (map.png)</span>
+              </button>
 
+              {/* Exact Google Maps Link provided by user */}
               <a
                 href={activeSpot.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => sound.playSuccess()}
-                className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5 shadow transition-all hover:scale-105"
+                className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5 shadow transition-all hover:scale-105 active:scale-95"
               >
-                <span>Chỉ đường Maps</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <Navigation className="w-3.5 h-3.5 text-amber-400" />
+                <span>Mở Google Maps chỉ đường</span>
+                <ExternalLink className="w-3 h-3" />
               </a>
             </div>
 
@@ -575,13 +528,70 @@ export default function Section2CrossyRoadMap() {
           <div className="bg-amber-100/70 border border-amber-300/80 rounded-2xl p-4 flex items-center gap-3 text-xs sm:text-sm text-amber-900">
             <span className="text-2xl">💡</span>
             <div>
-              <strong>Lời khuyên từ Bảo Đinh:</strong> Nếu bạn đi ô tô hoặc xe máy vào khung giờ 10:30 - 11:30 trưa, gửi ở <strong>TTTM Nowzone</strong> là phương án thảnh thơi nhất, vừa mát mẻ lại không sợ cảnh chen chúc nghẽn bãi xe cổng trường!
+              <strong>Lời khuyên từ Bảo Đinh:</strong> Bạn nên ưu tiên gửi ở <strong>Ưu tiên 1: TTTM Nowzone</strong> (rộng rãi, mát mẻ không lo hết chỗ) hoặc <strong>Ưu tiên 2: THPT Lê Hồng Phong</strong>. Sau đó tản bộ vào cổng KHTN theo sơ đồ <strong>map.png</strong> là thuận tiện nhất!
             </div>
           </div>
 
         </div>
 
       </div>
+
+      {/* Lightbox Modal: Xem toàn cảnh sơ đồ KHTN map.png */}
+      {isMapModalOpen && (
+        <div 
+          onClick={() => setIsMapModalOpen(false)}
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn select-none"
+        >
+          {/* Top Bar */}
+          <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-black/80 to-transparent flex items-center justify-between px-4 sm:px-8 z-50 text-white">
+            <div className="flex items-center gap-2">
+              <Map className="w-5 h-5 text-amber-400" />
+              <span className="font-display font-bold text-base sm:text-lg">
+                Sơ Đồ Vệ Tinh & Hướng Đi Đến Sân Trường KHTN
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <a
+                href="map.png"
+                download="So_Do_KHTN_map.png"
+                onClick={(e) => e.stopPropagation()}
+                className="p-2 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
+                title="Tải ảnh sơ đồ về máy"
+              >
+                <Download className="w-5 h-5" />
+              </a>
+
+              <button
+                onClick={() => setIsMapModalOpen(false)}
+                className="p-2 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
+                title="Đóng (ESC)"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          {/* Centered Image */}
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-h-[85vh] max-w-[92vw] flex items-center justify-center rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-slate-900"
+          >
+            <img
+              src="map.png"
+              alt="Sơ đồ chi tiết khuôn viên KHTN và các bãi xe"
+              className="max-h-[82vh] max-w-[90vw] w-auto h-auto object-contain"
+            />
+          </div>
+
+          {/* Bottom Note */}
+          <div className="absolute bottom-4 inset-x-4 text-center text-xs text-slate-300 font-sans pointer-events-none">
+            <span className="bg-black/70 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
+              💡 Tham khảo vị trí Nowzone, Lê Hồng Phong, KHTN và ĐH Sư Phạm trên ảnh vệ tinh
+            </span>
+          </div>
+        </div>
+      )}
 
     </section>
   );

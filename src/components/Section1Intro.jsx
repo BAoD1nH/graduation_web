@@ -17,7 +17,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
       pageLabel: '1/2',
       title: 'Lễ Trường (Toàn Trường KHTN)',
       dateText: 'Thứ 5 - Ngày 26.11.2026',
-      timeText: '11:00 am - 12:30 pm',
+      timeText: '10:45 am - 12:30 pm',
       location: 'Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5',
       image: 'graduation_01.png',
       caption: '"The time has come. Come join with me!"',
@@ -28,8 +28,8 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
       pageLabel: '2/2',
       title: 'Lễ Khoa Công Nghệ Thông Tin',
       dateText: 'Chủ Nhật - Ngày 06.12.2026',
-      timeText: 'Buổi sáng / Trưa',
-      location: 'Sân trường & Giảng đường Khoa CNTT - KHTN',
+      timeText: '10:45 am - 12:30 pm',
+      location: 'Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5',
       image: 'graduation_02.png',
       caption: '"Khoảnh khắc ấm cúng cùng Khoa CNTT!"',
       badge: 'Lễ Khoa CNTT'
@@ -157,9 +157,8 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
             </div>
 
             <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-sans">
-              Sau 4 năm miệt mài cùng những dòng code, thuật toán và những đêm thâu đồ án tại cơ sở 227 Nguyễn Văn Cừ, 
-              mình đã chính thức hoàn thành chặng đường sinh viên và chuẩn bị nhận tấm bằng cử nhân IT! 
-              Rất vinh hạnh và hạnh phúc nếu được đón bạn đến chung vui và chụp cùng mình vài tấm ảnh kỷ niệm nhé! 🎉
+              Sau 4 năm miệt mài chạy deadline đồ án tại Trường đại học Khoa học tự nhiên, ĐHQG-TPHCM. Mình đã chính thức tốt nghiệp và hoàn thành chặng đường sinh viên, chuẩn bị nhận tấm bằng cử nhân CNTT! 
+              Và để ngày vui thêm phần trọn vẹn, rất hân hạnh được mời bạn đến chung vui và chụp cùng mình vài tấm ảnh kỷ niệm nhé! 🎉
             </p>
 
             {/* Quick Contact & Info Bar */}
