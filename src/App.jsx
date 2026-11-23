@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Section1Intro from './components/Section1Intro';
+import Section2CrossyRoadMap from './components/Section2CrossyRoadMap';
 import Section3SpotifyStory from './components/Section3SpotifyStory';
 import DevConsoleModal from './components/DevConsoleModal';
 import { Heart, MapPin, Phone, MessageSquare, Sparkles, ArrowUp } from 'lucide-react';
@@ -26,13 +27,16 @@ export default function App() {
 
       {/* Main Single Page Content */}
       <main className="flex-1">
-        {/* Phần 1: Lời chào, Thư mời, Album kỷ niệm & Chọn Option */}
+        {/* Phần 1: Graduation Announcement */}
         <Section1Intro 
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
         />
 
-        {/* Phần 2: Lời nhắn nhủ recap Spotify Story & Thư mời tốt nghiệp */}
+        {/* Phần 2: Hướng dẫn gửi xe (Crossy Road Map) */}
+        <Section2CrossyRoadMap />
+
+        {/* Phần 3: Những lời nhắn nhủ bạn muốn gửi đến mình */}
         <Section3SpotifyStory 
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}

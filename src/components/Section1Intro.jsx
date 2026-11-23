@@ -3,7 +3,6 @@ import {
   Calendar, Clock, MapPin, Sparkles, CheckCircle2, ChevronRight, ChevronLeft, 
   Share2, Award, Heart, Laptop, Camera, Smile, X, ZoomIn, Download 
 } from 'lucide-react';
-import MemoryAlbum from './MemoryAlbum';
 import { sound } from '../utils/audio';
 import { launchConfetti } from '../utils/confetti';
 
@@ -277,9 +276,6 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
         </div>
       </div>
 
-      {/* Memory Scrapbook Album */}
-      <MemoryAlbum />
-
       {/* Option Selector: Chọn buổi đến chụp ảnh */}
       <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
         {/* Glow ambient */}
@@ -411,11 +407,11 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
             </a>
 
             <a
-              href="#part3"
-              onClick={() => sound.playTap()}
+              href="#part2"
+              onClick={() => sound.playHop()}
               className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 border border-white/20 transition-colors"
             >
-              <span>Nhắn nhủ & Xem Story</span>
+              <span>Xem chỗ gửi xe Crossy Road</span>
               <ChevronRight className="w-4 h-4" />
             </a>
           </div>
