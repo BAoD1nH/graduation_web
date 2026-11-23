@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Calendar, Clock, MapPin, Sparkles, CheckCircle2, ChevronRight, ChevronLeft, 
-  Share2, Award, Heart, Laptop, Camera, Smile, X, ZoomIn, Download 
+  Share2, Award, Heart, Laptop, Camera, Smile, X, ZoomIn, Download, MessageCircle
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 import { launchConfetti } from '../utils/confetti';
@@ -76,7 +76,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
 
   useEffect(() => {
     // Target dates
-    const targetDate = selectedOption === 'option1'
+    const targetDate = (selectedOption === 'option1' || selectedOption === 'both')
       ? new Date('2026-11-26T11:00:00+07:00').getTime()
       : new Date('2026-12-06T08:30:00+07:00').getTime();
 
@@ -109,11 +109,11 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
 
   // Google Calendar Link generator
   const getGoogleCalendarUrl = () => {
-    if (selectedOption === 'option1') {
-      return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=L%E1%BB%85+T%E1%BB%91t+Nghi%E1%BB%87p+B%E1%BA%A3o+%C4%90inh+(L%E1%BB%85+Tr%C6%B0%E1%BB%9Dng)&dates=20261126T040000Z/20261126T053000Z&details=Ch%E1%BB%A5p+%E1%BA%A3nh+k%E1%BB%B7+ni%E1%BB%87m+c%C3%B9ng+B%E1%BA%A3o+%C4%90inh+t%E1%BA%A1i+S%C3%A2n+tr%C6%B0%E1%BB%9Dng+KHTN.+Hotline:+0358180131&location=227+Nguy%E1%BB%85n+V%C4%83n+C%E1%BB%AB,+Ph%C6%B0%E1%BB%9Dng+Ch%E1%BB%A3+Qu%C3%A1n,+Qu%E1%BA%ADn+5,+TP.HCM";
-    } else {
+    if (selectedOption === 'option2') {
       return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=L%E1%BB%85+T%E1%BB%91t+Nghi%E1%BB%87p+B%E1%BA%A3o+%C4%90inh+(L%E1%BB%85+Khoa+CNTT)&dates=20261206T013000Z/20261206T043000Z&details=Ch%E1%BB%A5p+%E1%BA%A3nh+k%E1%BB%B7+ni%E1%BB%87m+c%C3%B9ng+B%E1%BA%A3o+%C4%90inh+(L%E1%BB%85+Khoa+CNTT)+t%E1%BA%A1i+KHTN.+Hotline:+0358180131&location=227+Nguy%E1%BB%85n+V%C4%83n+C%E1%BB%AB,+Ph%C6%B0%E1%BB%9Dng+Ch%E1%BB%A3+Qu%C3%A1n,+Qu%E1%BA%ADn+5,+TP.HCM";
     }
+    // option1 or both → show Lễ Trường (earliest date)
+    return "https://calendar.google.com/calendar/render?action=TEMPLATE&text=L%E1%BB%85+T%E1%BB%91t+Nghi%E1%BB%87p+B%E1%BA%A3o+%C4%90inh+(L%E1%BB%85+Tr%C6%B0%E1%BB%9Dng)&dates=20261126T040000Z/20261126T053000Z&details=Ch%E1%BB%A5p+%E1%BA%A3nh+k%E1%BB%B7+ni%E1%BB%87m+c%C3%B9ng+B%E1%BA%A3o+%C4%90inh+t%E1%BA%A1i+S%C3%A2n+tr%C6%B0%E1%BB%9Dng+KHTN.+Hotline:+0358180131&location=227+Nguy%E1%BB%85n+V%C4%83n+C%E1%BB%AB,+Ph%C6%B0%E1%BB%9Dng+Ch%E1%BB%A3+Qu%C3%A1n,+Qu%E1%BA%ADn+5,+TP.HCM";
   };
 
   return (
@@ -293,7 +293,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
             Hãy chọn buổi bạn rảnh nhất bên dưới để web hiển thị đúng thông tin, đếm ngược và xuất thư mời tương ứng cho bạn nhé!
           </p>
 
-          {/* 2 Options Cards */}
+          {/* 2 Options Cards + Option 3 */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 text-left">
             
             {/* OPTION 1 */}
@@ -319,7 +319,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
               <div className="space-y-1.5 text-xs text-slate-300 font-sans">
                 <div className="flex items-center gap-2">
                   <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span><strong>11:00 am - 12:30 pm</strong> (Khung giờ đón khách & chụp ảnh)</span>
+                  <span><strong>11:00 am - 12:30 pm</strong></span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
@@ -327,7 +327,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
                 </div>
               </div>
               <div className="mt-3 inline-block text-[11px] font-semibold px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                🎉 Lễ tốt nghiệp chính thức toàn trường
+                🎉 Lễ tốt nghiệp cấp Trường
               </div>
             </div>
 
@@ -354,16 +354,41 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
               <div className="space-y-1.5 text-xs text-slate-300 font-sans">
                 <div className="flex items-center gap-2">
                   <Clock className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span><strong>Buổi sáng / Trưa</strong> (Ấm cúng cùng thầy cô & bạn bè Khoa IT)</span>
+                  <span><strong>10:45am - 12:30pm</strong></span>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="w-3.5 h-3.5 text-rose-400 shrink-0" />
-                  <span>Sân trường & Giảng đường Khoa CNTT - KHTN</span>
+                  <span>Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5</span>
                 </div>
               </div>
               <div className="mt-3 inline-block text-[11px] font-semibold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                💻 Lễ tốt nghiệp riêng của Khoa Công nghệ Thông tin
+                💻 Lễ tốt nghiệp cấp Khoa của Khoa CNTT
               </div>
+            </div>
+
+            {/* OPTION 3: Tham dự cả 2 */}
+            <div
+              onClick={() => handleSelectOption('both')}
+              className={`cursor-pointer rounded-2xl p-5 border-2 transition-all relative md:col-span-2 ${
+                selectedOption === 'both'
+                  ? 'bg-emerald-900/40 border-emerald-400 shadow-lg shadow-emerald-500/20 scale-[1.01]'
+                  : 'bg-slate-800/60 border-slate-700 hover:border-slate-500 opacity-80 hover:opacity-100'
+              }`}
+            >
+              {selectedOption === 'both' && (
+                <div className="absolute top-3 right-3 bg-emerald-500 text-white p-1 rounded-full">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+              )}
+              <div className="text-xs font-mono font-bold text-emerald-300 uppercase tracking-wider mb-1">
+                Option 3 • Tham Dự Cả 2 🎉
+              </div>
+              <h3 className="text-lg font-bold text-white mb-1">
+                Thứ 5 (26.11) & Chủ Nhật (06.12.2026)
+              </h3>
+              <p className="text-xs text-slate-400 font-sans">
+                Tham dự cả Lễ Tốt Nghiệp cấp Trường lẫn Lễ Khoa CNTT — đếm ngược sẽ hiển thị theo ngày gần nhất (26.11).
+              </p>
             </div>
 
           </div>
@@ -412,6 +437,15 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
             >
               <span>Xem chỗ gửi xe & Sơ đồ KHTN</span>
               <ChevronRight className="w-4 h-4" />
+            </a>
+
+            <a
+              href="#part3"
+              onClick={() => sound.playPop()}
+              className="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-transform hover:scale-105"
+            >
+              <MessageCircle className="w-4 h-4" />
+              Viết lời chúc cho Bảo
             </a>
           </div>
 

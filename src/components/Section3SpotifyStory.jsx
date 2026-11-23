@@ -137,9 +137,11 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
   ];
 
   // Graduation card image according to option
-  const invitationImage = selectedOption === 'option1' ? 'graduation_01.png' : 'graduation_02.png';
-  const invitationTitle = selectedOption === 'option1' 
-    ? 'Lễ Trường • Thứ 5, 26.11.2026' 
+  const invitationImage = (selectedOption === 'option1' || selectedOption === 'both') ? 'graduation_01.png' : 'graduation_02.png';
+  const invitationTitle = selectedOption === 'option1'
+    ? 'Lễ Trường • Thứ 5, 26.11.2026'
+    : selectedOption === 'both'
+    ? 'Tham dự cả 2 buổi lễ 🎉'
     : 'Lễ Khoa CNTT • Chủ Nhật, 06.12.2026';
 
   return (
@@ -152,7 +154,7 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
           Interactive Story & Guestbook
         </div>
         <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-slate-900 tracking-tight">
-          Những Lời Nhắn Nhủ Bạn Muốn Gửi Đến Mình
+          Những Lời Nhắn Bạn Muốn Gửi Đến Mình
         </h2>
         <p className="text-sm sm:text-base text-slate-600 mt-2 font-sans">
           Thực hiện qua 5 bước để chọn buổi tham dự, gửi lời chúc (hỗ trợ ẩn danh), 
@@ -287,7 +289,7 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
                           </div>
                           <div className="text-[11px] text-slate-300 mt-1 flex items-center gap-1.5">
                             <Clock className="w-3 h-3 text-amber-400" />
-                            <span>11:00 am - 12:30 pm</span>
+                            <span>10:45 am - 12:30 pm</span>
                           </div>
                           <div className="text-[10px] text-slate-400 flex items-center gap-1.5 mt-0.5">
                             <MapPin className="w-3 h-3 text-rose-400" />
@@ -324,15 +326,47 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
                           </div>
                           <div className="text-[11px] text-slate-300 mt-1 flex items-center gap-1.5">
                             <Clock className="w-3 h-3 text-amber-400" />
-                            <span>Buổi sáng / Trưa</span>
+                            <span>10:45 am - 12:30 pm</span>
                           </div>
                           <div className="text-[10px] text-slate-400 flex items-center gap-1.5 mt-0.5">
                             <MapPin className="w-3 h-3 text-rose-400" />
-                            <span>Sân trường & Giảng đường Khoa CNTT</span>
+                            <span>Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5</span>
                           </div>
                         </div>
                         {selectedOption === 'option2' && (
                           <div className="p-1 rounded-full bg-amber-500 text-white shadow">
+                            <CheckCircle2 className="w-4 h-4" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Option 3 Card: Tham dự cả 2 */}
+                    <div
+                      onClick={() => {
+                        sound.playTap();
+                        setSelectedOption('both');
+                      }}
+                      className={`cursor-pointer rounded-2xl p-3.5 border-2 transition-all relative ${
+                        selectedOption === 'both'
+                          ? 'bg-emerald-900/60 border-emerald-400 shadow-lg shadow-emerald-500/30 scale-[1.02]'
+                          : 'bg-white/10 border-white/15 hover:border-white/40'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="text-[10px] font-mono font-bold text-emerald-300 uppercase">
+                            Option 3 • Tham Dự Cả 2
+                          </div>
+                          <div className="text-sm font-bold text-white mt-0.5">
+                            Thứ 5 (26.11) & Chủ Nhật (06.12) 🎉
+                          </div>
+                          <div className="text-[10px] text-slate-400 mt-1">
+                            Tham dự cả Lễ Trường lẫn Lễ Khoa CNTT!
+                          </div>
+                        </div>
+                        {selectedOption === 'both' && (
+                          <div className="p-1 rounded-full bg-emerald-500 text-white shadow">
                             <CheckCircle2 className="w-4 h-4" />
                           </div>
                         )}
@@ -421,7 +455,7 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
                           type="text"
                           value={senderName}
                           onChange={(e) => setSenderName(e.target.value)}
-                          placeholder="VD: Tuấn KHTN, Bạn thân..."
+                          placeholder="VD: Bảo Đinh..."
                           className="w-full bg-black/50 border border-white/20 rounded-xl px-3 py-1.5 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-amber-400"
                         />
                       </div>
@@ -432,27 +466,13 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
                       <label className="text-[10px] font-mono uppercase text-amber-300 font-bold block mb-1">
                         Mối quan hệ với Bảo Đinh:
                       </label>
-                      <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-                        {[
-                          "Bạn cùng khóa KHTN 🎓",
-                          "Đồng đội chạy đồ án 💻",
-                          "Bạn bè tri kỷ 🌻",
-                          "Người thân gia đình 🏠"
-                        ].map((rel) => (
-                          <button
-                            key={rel}
-                            type="button"
-                            onClick={() => setRelationTag(rel)}
-                            className={`p-1.5 rounded-lg border text-left truncate transition-all ${
-                              relationTag === rel
-                                ? 'bg-amber-400 text-slate-950 font-bold border-amber-400 shadow'
-                                : 'bg-black/30 text-slate-300 border-white/10 hover:border-white/30'
-                            }`}
-                          >
-                            {rel}
-                          </button>
-                        ))}
-                      </div>
+                      <input
+                        type="text"
+                        value={relationTag}
+                        onChange={(e) => setRelationTag(e.target.value)}
+                        placeholder="VD: Bạn cùng lớp IT, Người bạn thân 10 năm..."
+                        className="w-full bg-black/50 border border-white/20 rounded-xl px-3 py-1.5 text-white placeholder-slate-400 text-xs focus:outline-none focus:border-amber-400"
+                      />
                     </div>
 
                     {/* Biến tấu: Vibe khi đến */}
@@ -669,6 +689,18 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
                   </div>
 
                   {/* The Invitation Card Image */}
+                  {selectedOption === 'both' ? (
+                    <div className="space-y-2">
+                      <div className="relative rounded-xl overflow-hidden border-2 border-white/30 shadow bg-white max-h-[160px] flex items-center justify-center">
+                        <img src="graduation_01.png" alt="Thư mời Lễ Trường" className="w-full h-full object-contain" />
+                        <div className="absolute top-1.5 right-1.5 bg-blue-700/90 text-white px-2 py-0.5 rounded-md text-[9px] font-mono font-bold">LỄ TRƯỜNG</div>
+                      </div>
+                      <div className="relative rounded-xl overflow-hidden border-2 border-white/30 shadow bg-white max-h-[160px] flex items-center justify-center">
+                        <img src="graduation_02.png" alt="Thư mời Lễ Khoa CNTT" className="w-full h-full object-contain" />
+                        <div className="absolute top-1.5 right-1.5 bg-amber-600/90 text-white px-2 py-0.5 rounded-md text-[9px] font-mono font-bold">LỄ KHOA</div>
+                      </div>
+                    </div>
+                  ) : (
                   <div className="relative rounded-2xl overflow-hidden border-2 border-white/30 shadow-2xl bg-white max-h-[300px] flex items-center justify-center">
                     <img
                       src={invitationImage}
@@ -679,6 +711,7 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
                       {selectedOption === 'option1' ? 'LỄ TRƯỜNG' : 'LỄ KHOA'}
                     </div>
                   </div>
+                  )}
 
                   <div className="text-[11px] text-amber-300 font-semibold">
                     {invitationTitle}
@@ -753,47 +786,6 @@ export default function Section3SpotifyStory({ selectedOption, setSelectedOption
         {/* Right Column: Sổ Lưu Bút Kỷ Niệm (Hiển thị lời chúc dưới dạng ẩn danh) */}
         <div className="lg:col-span-6 space-y-4">
           
-          {/* Quick Option Switcher for Invitation Card Preview */}
-          <div className="bg-white rounded-3xl p-5 border border-slate-200 paper-shadow flex items-center justify-between gap-4">
-            <div>
-              <div className="text-xs font-mono font-bold text-slate-500 uppercase">
-                Chế độ xem thư mời ở Trang 5:
-              </div>
-              <div className="font-display font-bold text-slate-800 text-sm mt-0.5">
-                {selectedOption === 'option1' ? 'Option 1: Lễ trường (26.11.2026)' : 'Option 2: Lễ Khoa (06.12.2026)'}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
-              <button
-                onClick={() => {
-                  sound.playTap();
-                  setSelectedOption('option1');
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  selectedOption === 'option1'
-                    ? 'bg-blue-600 text-white shadow'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Option 1
-              </button>
-              <button
-                onClick={() => {
-                  sound.playTap();
-                  setSelectedOption('option2');
-                }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  selectedOption === 'option2'
-                    ? 'bg-amber-500 text-white shadow'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                Option 2
-              </button>
-            </div>
-          </div>
-
           {/* Sổ Lưu Bút Kỷ Niệm (Wish Wall - Hiển thị dưới dạng ẩn danh) */}
           <div className="bg-[#fcfbf7] rounded-3xl p-6 border border-amber-900/10 paper-shadow">
             

@@ -82,7 +82,7 @@ export default function App() {
           </div>
 
           <div className="pt-6 border-t border-slate-100 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <span>© 2026 Đinh Nguyễn Gia Bảo • Thiết kế với đam mê Công nghệ Thông tin</span>
+            <span>© Author: Bao Dinh</span>
             <div className="flex items-center gap-2">
               <span>Host on GitHub Pages</span>
               <span>•</span>

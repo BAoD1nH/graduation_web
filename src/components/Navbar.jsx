@@ -29,7 +29,7 @@ export default function Navbar({ onOpenTerminal, selectedOption }) {
               Bảo Đinh
             </div>
             <div className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
-              HCMUS • IT Graduate
+              HCMUS • 2026
             </div>
           </div>
         </a>
