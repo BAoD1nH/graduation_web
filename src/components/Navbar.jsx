@@ -51,17 +51,7 @@ export default function Navbar({ onOpenTerminal, selectedOption }) {
             className="px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-blue-50/80 transition-all flex items-center gap-1.5"
           >
             <MapPin className="w-4 h-4 text-emerald-500" />
-            2. Hướng dẫn gửi xe & Sơ đồ
-          </a>
-
-          <a
-            href="#part3"
-            onClick={() => sound.playTap()}
-            className="px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-blue-50/80 transition-all flex items-center gap-1.5"
-          >
-            <MessageSquareHeart className="w-4 h-4 text-rose-500" />
-            3. Những lời nhắn nhủ (Coming soon 10.12.2026)
-            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+            2. Hướng dẫn gửi xe & Sơ đồ KHTN
           </a>
         </nav>
 

@@ -6,12 +6,22 @@ import {
 import { sound } from '../utils/audio';
 
 export default function Section2CrossyRoadMap() {
-  const [selectedSpot, setSelectedSpot] = useState(0); // Default to Nowzone (Priority 1)
+  const [selectedSpot, setSelectedSpot] = useState(0);
+  const [selectedMapIndex, setSelectedMapIndex] = useState(0);
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
+
+  const mapViews = [
+    { id: 'nowzone', label: '#1 Nowzone', image: 'nowzone.png' },
+    { id: 'lhp', label: '#2 THPT LHP', image: 'lhp.png' },
+    { id: 'hcmue', label: '#3 HCMUE', image: 'hcmue.jpg' },
+    { id: 'hcmus', label: '#4 HCMUS', image: 'hcmus.png' },
+    { id: 'map', label: '#5 Map', image: 'map.png' }
+  ];
 
   const parkingSpots = [
     {
       id: "nowzone",
+      mapId: 'nowzone',
       priority: 1,
       priorityLabel: "ƯU TIÊN 1",
       name: "Bãi xe Nowzone",
@@ -30,6 +40,7 @@ export default function Section2CrossyRoadMap() {
     },
     {
       id: "lhp",
+      mapId: 'lhp',
       priority: 2,
       priorityLabel: "ƯU TIÊN 2",
       name: "Bãi xe THPT Chuyên LHP",
@@ -48,6 +59,7 @@ export default function Section2CrossyRoadMap() {
     },
     {
       id: "khtn",
+      mapId: 'hcmus',
       priority: 4,
       priorityLabel: "ƯU TIÊN 4",
       name: "bãi xe ĐH KHTN",
@@ -66,6 +78,7 @@ export default function Section2CrossyRoadMap() {
     },
     {
       id: "sp",
+      mapId: 'hcmue',
       priority: 3,
       priorityLabel: "ƯU TIÊN 3",
       name: "Bãi xe ĐH Sư phạm",
@@ -81,14 +94,17 @@ export default function Section2CrossyRoadMap() {
       cons: "Hên xui hết chỗ, tội nghiệp sv sư phạm bị chiếm chỗ =))",
       googleMapsUrl: "https://maps.app.goo.gl/uMwfRXAAG4qNJHz6A",
       icon: "🏫"
-    }
+    },
   ];
 
   const activeSpot = parkingSpots[selectedSpot];
+  const activeMap = mapViews[selectedMapIndex];
 
   const handleSpotClick = (index) => {
     sound.playTap();
     setSelectedSpot(index);
+    const mapIndex = mapViews.findIndex((view) => view.id === parkingSpots[index].mapId);
+    if (mapIndex >= 0) setSelectedMapIndex(mapIndex);
   };
 
   const openMapModal = () => {
@@ -121,7 +137,7 @@ export default function Section2CrossyRoadMap() {
           <div className="w-full flex items-center justify-between text-xs font-sans font-bold text-slate-700 mb-3 px-1 select-none">
             <span className="flex items-center gap-2">
               <Map className="w-4 h-4 text-blue-600" />
-              Bản đồ Trường ĐH KHTN, ĐHQG-TPHCM
+              {activeMap.label}
             </span>
           </div>
 
@@ -132,9 +148,9 @@ export default function Section2CrossyRoadMap() {
             title="Click để phóng to sơ đồ xem chi tiết"
           >
             <img
-              src="map.png"
-              alt="Sơ đồ vệ tinh trường KHTN và các bãi xe xung quanh"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              src={activeMap.image}
+              alt={`${activeMap.label} parking and campus map`}
+              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
             />
             
             {/* Hover overlay hint */}
@@ -156,18 +172,23 @@ export default function Section2CrossyRoadMap() {
           </div>
 
           {/* 4 Quick Priority Selector Pills under Image */}
-          <div className="w-full grid grid-cols-4 gap-1.5 mt-3 select-none">
-            {parkingSpots.map((spot, idx) => (
+          <div className="w-full grid grid-cols-2 sm:grid-cols-5 gap-1.5 mt-3 select-none">
+            {mapViews.map((mapView, idx) => (
               <button
-                key={spot.id}
-                onClick={() => handleSpotClick(idx)}
+                key={mapView.id}
+                onClick={() => {
+                  sound.playTap();
+                  setSelectedMapIndex(idx);
+                  const spotIndex = parkingSpots.findIndex((spot) => spot.mapId === mapView.id);
+                  if (spotIndex >= 0) setSelectedSpot(spotIndex);
+                }}
                 className={`py-2 px-1 rounded-xl text-[11px] font-mono font-bold transition-all truncate text-center ${
-                  selectedSpot === idx
+                  selectedMapIndex === idx
                     ? 'bg-slate-900 text-amber-400 shadow-md scale-105 border border-slate-700'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
-                #{spot.priority} {spot.name.split(' ')[0]}
+                {mapView.label}
               </button>
             ))}
           </div>
@@ -324,14 +345,14 @@ export default function Section2CrossyRoadMap() {
             <div className="flex items-center gap-2">
               <Map className="w-5 h-5 text-amber-400" />
               <span className="font-display font-bold text-base sm:text-lg">
-                Sơ Đồ Vệ Tinh & Hướng Đi Đến Sân Trường KHTN
+                {activeMap.label}
               </span>
             </div>
 
             <div className="flex items-center gap-2">
               <a
-                href="map.png"
-                download="So_Do_KHTN_map.png"
+                href={activeMap.image}
+                download={activeMap.image}
                 onClick={(e) => e.stopPropagation()}
                 className="p-2 rounded-full bg-white/10 hover:bg-white/25 text-white transition-colors"
                 title="Tải ảnh sơ đồ về máy"
@@ -355,8 +376,8 @@ export default function Section2CrossyRoadMap() {
             className="relative max-h-[85vh] max-w-[92vw] flex items-center justify-center rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-slate-900"
           >
             <img
-              src="map.png"
-              alt="Sơ đồ chi tiết khuôn viên KHTN và các bãi xe"
+              src={activeMap.image}
+              alt={`${activeMap.label} parking and campus map`}
               className="max-h-[82vh] max-w-[90vw] w-auto h-auto object-contain"
             />
           </div>
