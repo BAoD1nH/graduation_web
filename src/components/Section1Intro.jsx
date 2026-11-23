@@ -410,7 +410,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
               onClick={() => sound.playHop()}
               className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 border border-white/20 transition-colors"
             >
-              <span>Xem chỗ gửi xe Crossy Road</span>
+              <span>Xem chỗ gửi xe & Sơ đồ KHTN</span>
               <ChevronRight className="w-4 h-4" />
             </a>
           </div>

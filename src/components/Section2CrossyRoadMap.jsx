@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { 
   MapPin, ExternalLink, Navigation, Sparkles, CheckCircle2, 
-  AlertTriangle, Map, Image as ImageIcon, ZoomIn, X, Download, Footprints 
+  AlertTriangle, Map, ZoomIn, X, Download, Footprints, Layers 
 } from 'lucide-react';
 import { sound } from '../utils/audio';
 
 export default function Section2CrossyRoadMap() {
   const [selectedSpot, setSelectedSpot] = useState(0); // Default to Nowzone (Priority 1)
   const [isMapModalOpen, setIsMapModalOpen] = useState(false);
-  const [activeViewTab, setActiveViewTab] = useState('crossy'); // 'crossy' or 'satellite'
-  const canvasRef = useRef(null);
 
   const parkingSpots = [
     {
@@ -28,7 +26,6 @@ export default function Section2CrossyRoadMap() {
       pros: "Hầm xe rộng rãi, máy lạnh mát rượi, bảo vệ chuyên nghiệp, 100% không lo hết chỗ vào ngày lễ.",
       cons: "Mất 3 phút đi bộ tản bộ qua cổng KHTN.",
       googleMapsUrl: "https://maps.app.goo.gl/uYtkmbGVDWaaZ7bHA",
-      targetCoords: { x: 100, y: 110 },
       icon: "🏬"
     },
     {
@@ -47,7 +44,6 @@ export default function Section2CrossyRoadMap() {
       pros: "Sân trường rợp bóng cây cổ thụ mát mẻ, an ninh tốt, đi bộ sang cổng KHTN chỉ 2 phút.",
       cons: "Ưu tiên xe máy, thường đông từ 10h trưa.",
       googleMapsUrl: "https://maps.app.goo.gl/GDKASLir5XvnroQh7",
-      targetCoords: { x: 280, y: 120 },
       icon: "🏫"
     },
     {
@@ -66,7 +62,6 @@ export default function Section2CrossyRoadMap() {
       pros: "Gửi xong đi thẳng vào khu vực sân khấu chụp ảnh với Bảo, có sơ đồ map.png hướng dẫn cách đi.",
       cons: "⚠️ CỰC KỲ DỄ FULL CHỖ VÀO NGÀY LỄ TỐT NGHIỆP! Khuyên bạn phải đến trước 10:30 ít nhất 30 phút.",
       googleMapsUrl: "https://maps.app.goo.gl/zoMs42Yr9ZaQbbBNA",
-      targetCoords: { x: 190, y: 220 },
       icon: "🎓"
     },
     {
@@ -85,174 +80,9 @@ export default function Section2CrossyRoadMap() {
       pros: "Vị trí sát vách trường KHTN.",
       cons: "❌ BẢO VỆ KHÁ KHÓ TÍNH! Ngày lễ tốt nghiệp thường kiểm tra thẻ sinh viên Sư Phạm nghiêm ngặt, khách ngoài rất dễ bị từ chối bắt quay đầu.",
       googleMapsUrl: "https://maps.app.goo.gl/uMwfRXAAG4qNJHz6A",
-      targetCoords: { x: 310, y: 290 },
       icon: "🚫"
     }
   ];
-
-  // Animated Crossy Road Isometric Map Canvas (No game controls, just aesthetic visual map)
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    let animationId;
-    let tick = 0;
-
-    // Moving voxel cars
-    const cars = [
-      { x: 30, y: 165, speed: 1.5, color: '#38bdf8', len: 45 },
-      { x: 210, y: 165, speed: 1.5, color: '#fb923c', len: 40 },
-      { x: 320, y: 255, speed: -1.3, color: '#facc15', len: 50 },
-      { x: 140, y: 255, speed: -1.3, color: '#ec4899', len: 42 },
-      { x: 70, y: 325, speed: 1.8, color: '#4ade80', len: 40 }
-    ];
-
-    const render = () => {
-      tick++;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // --- Background: Voxel / Isometric Lanes ---
-      
-      // Top grass zone (Nowzone & LHP area)
-      ctx.fillStyle = '#6bc752';
-      ctx.fillRect(0, 0, 400, 65);
-      ctx.fillStyle = '#59b042';
-      for (let i = 0; i < 400; i += 30) {
-        ctx.fillRect(i, 0, 15, 65);
-      }
-
-      // River canal
-      ctx.fillStyle = '#38bdf8';
-      ctx.fillRect(0, 65, 400, 30);
-      ctx.fillStyle = '#7dd3fc';
-      ctx.fillRect((tick % 70) * 6, 75, 40, 4);
-
-      // Middle Grass strip
-      ctx.fillStyle = '#6bc752';
-      ctx.fillRect(0, 95, 400, 50);
-      ctx.fillStyle = '#59b042';
-      for (let i = 0; i < 400; i += 30) {
-        ctx.fillRect(i, 95, 15, 50);
-      }
-
-      // Main Road 1: Nguyen Van Cu Ave
-      ctx.fillStyle = '#334155';
-      ctx.fillRect(0, 145, 400, 50);
-      // Dashed lane markings
-      ctx.fillStyle = '#f8fafc';
-      for (let x = 10; x < 400; x += 35) {
-        ctx.fillRect(x, 168, 18, 4);
-      }
-
-      // Middle Campus Entrance Grass (KHTN Campus Yard)
-      ctx.fillStyle = '#4ade80';
-      ctx.fillRect(0, 195, 400, 40);
-      ctx.fillStyle = '#22c55e';
-      ctx.fillRect(0, 208, 400, 14);
-
-      // Main Road 2: An Duong Vuong Ave
-      ctx.fillStyle = '#334155';
-      ctx.fillRect(0, 235, 400, 50);
-      ctx.fillStyle = '#f8fafc';
-      for (let x = 10; x < 400; x += 35) {
-        ctx.fillRect(x, 258, 18, 4);
-      }
-
-      // Secondary road
-      ctx.fillStyle = '#475569';
-      ctx.fillRect(0, 305, 400, 45);
-      ctx.fillStyle = '#cbd5e1';
-      for (let x = 5; x < 400; x += 30) {
-        ctx.fillRect(x, 326, 14, 3);
-      }
-
-      // Bottom Grass strip
-      ctx.fillStyle = '#6bc752';
-      ctx.fillRect(0, 350, 400, 50);
-      ctx.fillStyle = '#59b042';
-      for (let i = 0; i < 400; i += 30) {
-        ctx.fillRect(i, 350, 15, 50);
-      }
-
-      // --- Moving Voxel Cars ---
-      cars.forEach(car => {
-        car.x += car.speed;
-        if (car.speed > 0 && car.x > 420) car.x = -car.len;
-        if (car.speed < 0 && car.x < -car.len) car.x = 420;
-
-        // Voxel car body
-        ctx.fillStyle = car.color;
-        ctx.fillRect(car.x, car.y - 10, car.len, 20);
-        // Cabin
-        ctx.fillStyle = '#f8fafc';
-        ctx.fillRect(car.x + (car.speed > 0 ? 8 : 6), car.y - 8, car.len - 15, 16);
-        // Roof
-        ctx.fillStyle = car.color;
-        ctx.fillRect(car.x + (car.speed > 0 ? 12 : 10), car.y - 6, car.len - 22, 12);
-        // Headlights
-        ctx.fillStyle = '#fef08a';
-        if (car.speed > 0) {
-          ctx.fillRect(car.x + car.len - 2, car.y - 8, 3, 4);
-          ctx.fillRect(car.x + car.len - 2, car.y + 4, 3, 4);
-        } else {
-          ctx.fillRect(car.x - 1, car.y - 8, 3, 4);
-          ctx.fillRect(car.x - 1, car.y + 4, 3, 4);
-        }
-      });
-
-      // --- Voxel Trees around map ---
-      const trees = [
-        { x: 25, y: 30 }, { x: 365, y: 30 },
-        { x: 180, y: 110 }, { x: 20, y: 110 }, { x: 365, y: 110 },
-        { x: 30, y: 210 }, { x: 365, y: 210 },
-        { x: 20, y: 365 }, { x: 370, y: 365 }
-      ];
-      trees.forEach(t => {
-        ctx.fillStyle = '#78350f';
-        ctx.fillRect(t.x + 5, t.y + 12, 5, 10);
-        ctx.fillStyle = '#15803d';
-        ctx.fillRect(t.x, t.y, 16, 14);
-        ctx.fillStyle = '#22c55e';
-        ctx.fillRect(t.x + 2, t.y + 2, 12, 10);
-      });
-
-      // --- Draw Parking Landmark Pins on the Map ---
-      parkingSpots.forEach((spot, idx) => {
-        const isSelected = selectedSpot === idx;
-        const target = spot.targetCoords;
-
-        // Voxel building pad
-        ctx.fillStyle = isSelected ? '#fbbf24' : '#ffffff';
-        ctx.beginPath();
-        ctx.roundRect(target.x - 18, target.y - 18, 36, 36, [10]);
-        ctx.fill();
-        ctx.lineWidth = isSelected ? 3 : 1.5;
-        ctx.strokeStyle = isSelected ? '#b45309' : '#94a3b8';
-        ctx.stroke();
-
-        // Icon inside landmark
-        ctx.font = '16px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(spot.icon, target.x, target.y);
-
-        // Priority Badge Pill (Ưu tiên 1, 2, 3, 4)
-        ctx.font = 'bold 8px "Space Grotesk", sans-serif';
-        const badgeText = `#${spot.priority} ${spot.name.split(' ')[0]}`;
-        const labelWidth = ctx.measureText(badgeText).width + 8;
-        ctx.fillStyle = isSelected ? '#0f172a' : 'rgba(15, 23, 42, 0.85)';
-        ctx.fillRect(target.x - labelWidth / 2, target.y + 22, labelWidth, 14);
-        ctx.fillStyle = isSelected ? '#facc15' : '#ffffff';
-        ctx.fillText(badgeText, target.x, target.y + 29);
-      });
-
-      animationId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => cancelAnimationFrame(animationId);
-  }, [selectedSpot]);
 
   const activeSpot = parkingSpots[selectedSpot];
 
@@ -261,140 +91,94 @@ export default function Section2CrossyRoadMap() {
     setSelectedSpot(index);
   };
 
+  const openMapModal = () => {
+    sound.playPop();
+    setIsMapModalOpen(true);
+  };
+
   return (
     <section id="part2" className="py-12 px-4 sm:px-6 max-w-6xl mx-auto">
       
       {/* Title & Introduction */}
       <div className="text-center max-w-2xl mx-auto mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-mono font-bold uppercase tracking-wider mb-2">
-          <span>🚗</span> Crossy Road Style Campus & Parking Guide
+          <span>🗺️</span> Campus Navigation & Parking Guide
         </div>
         <h2 className="text-2xl sm:text-4xl font-display font-extrabold text-slate-900 tracking-tight">
           Hướng Dẫn Chỗ Gửi Xe & Sơ Đồ Đến KHTN
         </h2>
         <p className="text-sm sm:text-base text-slate-600 mt-2 font-sans">
-          Bản đồ thiết kế phong cách Crossy Road trực quan với 4 bãi xe theo thứ tự ưu tiên, 
-          kèm link Google Maps và sơ đồ khuôn viên (map.png) hướng dẫn cách đi bộ vào sân trường!
+          Sơ đồ thực tế toàn cảnh khu vực KHTN và 4 bãi xe theo thứ tự ưu tiên, 
+          kèm link Google Maps và hình ảnh hướng dẫn lối đi vào sân trường!
         </p>
-
-        {/* View Switcher: Crossy Road Map vs Sơ đồ thực tế map.png */}
-        <div className="flex items-center justify-center gap-2 mt-5">
-          <button
-            onClick={() => {
-              sound.playTap();
-              setActiveViewTab('crossy');
-            }}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all ${
-              activeViewTab === 'crossy'
-                ? 'bg-slate-900 text-white shadow-md scale-105'
-                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-            }`}
-          >
-            <span>🎮 Bản Đồ Crossy Road</span>
-          </button>
-
-          <button
-            onClick={() => {
-              sound.playTap();
-              setActiveViewTab('satellite');
-            }}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all ${
-              activeViewTab === 'satellite'
-                ? 'bg-blue-600 text-white shadow-md scale-105'
-                : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-            }`}
-          >
-            <Map className="w-4 h-4" />
-            <span>🗺️ Sơ Đồ Thực Tế (map.png)</span>
-          </button>
-        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Column: Crossy Road Isometric Map Canvas OR Satellite Map Preview */}
-        <div className="lg:col-span-6 bg-slate-900 rounded-3xl p-4 sm:p-5 shadow-2xl border-4 border-slate-800 flex flex-col items-center">
+        {/* Left Column: Sơ Đồ Thực Tế map.png */}
+        <div className="lg:col-span-6 bg-white rounded-3xl p-4 sm:p-5 shadow-xl border border-slate-200/80 paper-shadow flex flex-col items-center">
           
-          {/* Header Bar */}
-          <div className="w-full flex items-center justify-between text-xs font-mono text-emerald-400 mb-2 px-1 select-none">
-            <span className="flex items-center gap-1.5 font-bold">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              {activeViewTab === 'crossy' ? 'CROSSY ROAD CAMPUS MAP' : 'SƠ ĐỒ VỆ TINH KHTN (map.png)'}
+          {/* Top Bar on Card */}
+          <div className="w-full flex items-center justify-between text-xs font-sans font-bold text-slate-700 mb-3 px-1 select-none">
+            <span className="flex items-center gap-2">
+              <Map className="w-4 h-4 text-blue-600" />
+              SƠ ĐỒ VỆ TINH TOÀN CẢNH KHTN
             </span>
-            <span className="text-amber-400 font-bold">
-              4 ĐỊA ĐIỂM ƯU TIÊN
+            <span className="text-xs font-mono bg-blue-50 text-blue-700 px-2.5 py-0.5 rounded-full border border-blue-200">
+              map.png
             </span>
           </div>
 
-          {activeViewTab === 'crossy' ? (
-            /* Crossy Road Canvas */
-            <div className="relative rounded-2xl overflow-hidden border-2 border-slate-700 shadow-inner bg-slate-800 w-full">
-              <canvas 
-                ref={canvasRef} 
-                width={400} 
-                height={400} 
-                className="block w-full h-auto cursor-pointer"
-                onClick={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const clickX = ((e.clientX - rect.left) / rect.width) * 400;
-                  const clickY = ((e.clientY - rect.top) / rect.height) * 400;
-
-                  // Click on any spot landmark to select it
-                  parkingSpots.forEach((spot, idx) => {
-                    const dist = Math.hypot(spot.targetCoords.x - clickX, spot.targetCoords.y - clickY);
-                    if (dist < 35) {
-                      handleSpotClick(idx);
-                    }
-                  });
-                }}
-              />
-
-              {/* Click hints overlay */}
-              <div className="absolute bottom-2 inset-x-2 bg-slate-950/80 backdrop-blur-sm text-white px-3 py-1.5 rounded-xl text-[11px] flex items-center justify-between border border-white/10 select-none">
-                <span className="text-amber-300 font-mono">💡 Chạm vào các điểm trên map để xem</span>
-                <span className="text-slate-300">Đang chọn: <strong>{activeSpot.name}</strong></span>
+          {/* Image Container with Zoom On Click */}
+          <div 
+            onClick={openMapModal}
+            className="relative rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-900 w-full aspect-[4/3] sm:aspect-square flex items-center justify-center cursor-pointer group"
+            title="Click để phóng to sơ đồ xem chi tiết"
+          >
+            <img
+              src="map.png"
+              alt="Sơ đồ vệ tinh trường KHTN và các bãi xe xung quanh"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            
+            {/* Hover overlay hint */}
+            <div className="absolute inset-0 bg-slate-950/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+              <div className="px-4 py-2 rounded-full bg-slate-900/80 backdrop-blur-sm flex items-center gap-2 text-xs font-bold shadow-lg">
+                <ZoomIn className="w-4 h-4 text-amber-400" />
+                <span>Phóng to xem chi tiết</span>
               </div>
             </div>
-          ) : (
-            /* Sơ Đồ Thực Tế map.png */
-            <div 
-              onClick={() => setIsMapModalOpen(true)}
-              className="relative rounded-2xl overflow-hidden border-2 border-slate-700 shadow-inner bg-slate-800 w-full aspect-square flex items-center justify-center cursor-pointer group"
-              title="Click để phóng to toàn màn hình"
-            >
-              <img
-                src="map.png"
-                alt="Sơ đồ vệ tinh trường KHTN"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-slate-950/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                <div className="px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-sm flex items-center gap-2 text-xs font-bold">
-                  <ZoomIn className="w-4 h-4 text-amber-400" />
-                  <span>Phóng to sơ đồ</span>
-                </div>
-              </div>
-              <div className="absolute bottom-2 inset-x-2 bg-slate-950/80 backdrop-blur-sm text-white px-3 py-1.5 rounded-xl text-[11px] flex items-center justify-between border border-white/10">
-                <span>📍 Sơ đồ toàn cảnh KHTN & bãi xe</span>
-                <span className="text-amber-300 font-bold">Click để phóng to</span>
-              </div>
-            </div>
-          )}
 
-          {/* Quick jump pills */}
-          <div className="w-full grid grid-cols-4 gap-1.5 mt-3">
+            {/* Bottom bar on image */}
+            <div className="absolute bottom-2.5 inset-x-2.5 bg-slate-900/80 backdrop-blur-md text-white px-3 py-1.5 rounded-xl text-[11px] flex items-center justify-between border border-white/10 select-none">
+              <span className="flex items-center gap-1.5 font-medium">
+                <Footprints className="w-3.5 h-3.5 text-amber-400" />
+                Xem vị trí Nowzone, Lê Hồng Phong, KHTN
+              </span>
+              <span className="text-amber-300 font-bold hidden sm:inline">Click để zoom</span>
+            </div>
+          </div>
+
+          {/* 4 Quick Priority Selector Pills under Image */}
+          <div className="w-full grid grid-cols-4 gap-1.5 mt-3 select-none">
             {parkingSpots.map((spot, idx) => (
               <button
                 key={spot.id}
                 onClick={() => handleSpotClick(idx)}
-                className={`py-1.5 px-1 rounded-xl text-[11px] font-mono font-bold transition-all truncate text-center ${
+                className={`py-2 px-1 rounded-xl text-[11px] font-mono font-bold transition-all truncate text-center ${
                   selectedSpot === idx
-                    ? 'bg-amber-400 text-slate-900 shadow-md scale-105'
-                    : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                    ? 'bg-slate-900 text-amber-400 shadow-md scale-105 border border-slate-700'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
                 #{spot.priority} {spot.name.split(' ')[0]}
               </button>
             ))}
+          </div>
+
+          {/* Quick Note under map */}
+          <div className="w-full mt-3 text-center text-xs text-slate-500 font-sans">
+            💡 Bạn có thể click vào ảnh sơ đồ để phóng to toàn màn hình bất kỳ lúc nào!
           </div>
 
         </div>
@@ -494,18 +278,15 @@ export default function Section2CrossyRoadMap() {
               </div>
             </div>
 
-            {/* Action Buttons: Direct Google Maps Link + Xem map.png */}
+            {/* Action Buttons: Direct Google Maps Link + Phóng to map.png */}
             <div className="pt-2 flex flex-wrap items-center justify-between gap-2 border-t border-slate-100">
               {/* Button mở sơ đồ map.png */}
               <button
-                onClick={() => {
-                  sound.playPop();
-                  setIsMapModalOpen(true);
-                }}
+                onClick={openMapModal}
                 className="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold flex items-center gap-1.5 transition-colors border border-blue-200"
               >
-                <Map className="w-3.5 h-3.5" />
-                <span>Xem sơ đồ KHTN (map.png)</span>
+                <ZoomIn className="w-3.5 h-3.5" />
+                <span>Phóng to sơ đồ KHTN</span>
               </button>
 
               {/* Exact Google Maps Link provided by user */}

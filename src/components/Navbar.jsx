@@ -51,7 +51,7 @@ export default function Navbar({ onOpenTerminal, selectedOption }) {
             className="px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-blue-50/80 transition-all flex items-center gap-1.5"
           >
             <MapPin className="w-4 h-4 text-emerald-500" />
-            2. Hướng dẫn gửi xe <span className="text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded font-mono font-bold">CROSSY</span>
+            2. Hướng dẫn gửi xe & Sơ đồ
           </a>
 
           <a
