@@ -60,7 +60,7 @@ export default function Navbar({ onOpenTerminal, selectedOption }) {
             className="px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-blue-50/80 transition-all flex items-center gap-1.5"
           >
             <MessageSquareHeart className="w-4 h-4 text-rose-500" />
-            3. Những lời nhắn nhủ
+            3. Những lời nhắn nhủ (Coming soon 10.12.2026)
             <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
           </a>
         </nav>
