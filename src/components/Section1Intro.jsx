@@ -15,7 +15,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
     {
       id: 'option1',
       pageLabel: '1/2',
-      title: 'Lễ Trường (Toàn Trường KHTN)',
+      title: 'Lễ tốt nghiệp cấp Trường',
       dateText: 'Thứ 5 - Ngày 26.11.2026',
       timeText: '10:45 am - 12:30 pm',
       location: 'Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5',
@@ -26,7 +26,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
     {
       id: 'option2',
       pageLabel: '2/2',
-      title: 'Lễ Khoa Công Nghệ Thông Tin',
+      title: 'Lễ tốt nghiệp cấp Khoa (Khoa CNTT)',
       dateText: 'Chủ Nhật - Ngày 06.12.2026',
       timeText: '10:45 am - 12:30 pm',
       location: 'Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5',
@@ -287,10 +287,10 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
             Lựa chọn buổi tham dự
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold tracking-tight">
-            Bạn Sẽ Đi Chụp Ảnh Cùng Bảo Vào Buổi Nào?
+            Bạn tham dự buổi lễ nào?
           </h2>
           <p className="text-sm text-slate-300">
-            Hãy chọn buổi bạn rảnh nhất bên dưới để web hiển thị đúng thông tin, đếm ngược và xuất thư mời tương ứng cho bạn nhé!
+            Hãy chọn buổi nào bạn thấy thoải mái nhất bên dưới nhé!
           </p>
 
           {/* 2 Options Cards + Option 3 */}
