@@ -21,7 +21,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
       location: 'Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5',
       image: 'graduation_01.png',
       caption: '"The time has come. Come join with me!"',
-      badge: 'Lễ Trường'
+      badge: 'Lễ TN cấp Trường 26.11'
     },
     {
       id: 'option2',
@@ -32,7 +32,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
       location: 'Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5',
       image: 'graduation_02.png',
       caption: '"Miss the first chance? Don\'t worry!"',
-      badge: 'Lễ Khoa CNTT'
+      badge: 'Lễ TN cấp Khoa CNTT 06.12'
     }
   ];
 
