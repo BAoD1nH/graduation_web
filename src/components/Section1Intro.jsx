@@ -31,7 +31,7 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
       timeText: '10:45 am - 12:30 pm',
       location: 'Sân trường KHTN - 227 Nguyễn Văn Cừ, Q.5',
       image: 'graduation_02.png',
-      caption: '"Khoảnh khắc ấm cúng cùng Khoa CNTT!"',
+      caption: '"Miss the first chance? Don\'t worry!"',
       badge: 'Lễ Khoa CNTT'
     }
   ];
@@ -440,7 +440,9 @@ export default function Section1Intro({ selectedOption, setSelectedOption }) {
             </a>
 
             <a
-              href="#part3"
+              href="https://forms.gle/LQg2tY2oQudgYyFXA"
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={() => sound.playPop()}
               className="px-5 py-2.5 rounded-xl bg-rose-500 hover:bg-rose-400 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-transform hover:scale-105"
             >
